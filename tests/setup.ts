@@ -1,11 +1,7 @@
-// Vitest setup file for EchoHook tests
-// This file runs before all test files
+// Vitest setup file for EchoHook E2E tests
+// This file runs before all test files and sets up the test environment
+// for true end-to-end testing using Cloudflare Workers runtime
 import { vi, beforeEach } from "vitest";
-import app from "../src/index";
-import { Env } from "../src/types";
-
-// Mock fetch globally for tests
-global.fetch = vi.fn();
 
 // Set up test environment variables
 process.env.NODE_ENV = "test";
@@ -24,8 +20,9 @@ beforeEach(() => {
 });
 
 // Helper function to create an authentication token for tests
+// Uses the real API endpoint to create tokens
 export async function createTestToken(
-  mockEnv: Env,
+  worker: Fetcher,
   name = "Test Token"
 ): Promise<string> {
   const tokenRequest = new Request("http://localhost/auth/token", {
@@ -34,7 +31,7 @@ export async function createTestToken(
     body: JSON.stringify({ name }),
   });
 
-  const tokenResponse = await app.fetch(tokenRequest, mockEnv);
+  const tokenResponse = await worker.fetch(tokenRequest);
   if (!tokenResponse.ok) {
     throw new Error(`Failed to create test token: ${tokenResponse.status}`);
   }
@@ -43,7 +40,6 @@ export async function createTestToken(
   return tokenData.data.token;
 }
 
-// Helper function to make authenticated requests
 export function createAuthenticatedRequest(
   url: string,
   options: RequestInit = {},

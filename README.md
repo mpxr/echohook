@@ -264,21 +264,3 @@ curl -X PUT http://localhost:8787/bins/YOUR_BIN_ID \
 ```bash
 curl -X DELETE http://localhost:8787/bins/YOUR_BIN_ID
 ```
-
-## Environment Variables
-
-Configure in `wrangler.toml`:
-
-- `ENVIRONMENT`: Current environment (development/production)
-
-## Best Practices Implemented
-
-- **Input Validation**: All inputs are validated before processing
-- **Error Handling**: Comprehensive error handling with proper HTTP status codes
-- **Type Safety**: Full TypeScript typing for request/response objects
-- **UUID Identifiers**: Unique identifiers for all bins and requests
-- **CORS**: Enabled for cross-origin requests
-- **Logging**: Request logging for debugging and monitoring
-- **RESTful API**: Clean API design with consistent response format
-- **Webhook Flexibility**: Accepts any HTTP method and content type
-- **Request Metadata**: Captures comprehensive request information including IP, User-Agent, etc.

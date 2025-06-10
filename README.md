@@ -163,7 +163,7 @@ curl -X POST http://localhost:8787/webhook/your-bin-id \
 
 #### Captured Webhook Request Response
 
-````json
+```json
 {
   "success": true,
   "data": [
@@ -196,7 +196,7 @@ curl -X POST http://localhost:8787/webhook/your-bin-id \
 
 ```bash
 pnpm install
-````
+```
 
 ### 2. Development
 

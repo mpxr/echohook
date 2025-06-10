@@ -188,6 +188,7 @@ curl -X POST http://localhost:8787/webhook/your-bin-id \
     }
   ]
 }
+```
 
 ## Setup Instructions
 

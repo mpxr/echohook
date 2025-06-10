@@ -1,4 +1,4 @@
-# EchoHook - Webhook Bin Service
+# 🪝 EchoHook - Webhook Bin Service
 
 A webhook bin service built with CloudFlare Workers, Hono framework, and CloudFlare Durable Objects. Capture, inspect, and debug HTTP webhooks with ease.
 

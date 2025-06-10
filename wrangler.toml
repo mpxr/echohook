@@ -1,0 +1,18 @@
+name = "echohook"
+main = "src/index.ts"
+compatibility_date = "2024-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[durable_objects]
+bindings = [{ name = "WEBHOOKS", class_name = "WebhooksStorage" }]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["WebhooksStorage"]
+
+[vars]
+ENVIRONMENT = "development"
+
+[env.production]
+[env.production.vars]
+ENVIRONMENT = "production"

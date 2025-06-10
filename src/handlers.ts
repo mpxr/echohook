@@ -8,6 +8,7 @@ import {
   ApiToken,
   WebhooksStorageRPC,
 } from "./types.js";
+import { logger } from "./logger.js";
 
 function getDurableObject(env: Env): DurableObjectStub & WebhooksStorageRPC {
   const id = env.WEBHOOKS.idFromName("webhooks");
@@ -21,7 +22,9 @@ export async function getBins(c: Context<{ Bindings: Env }>) {
 
     return c.json({ success: true, data: bins }, 200);
   } catch (error) {
-    console.error("Error fetching bins:", error);
+    logger.error("Error fetching bins", {
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw new HTTPException(500, { message: "Failed to fetch bins" });
   }
 }
@@ -43,7 +46,10 @@ export async function getBin(c: Context<{ Bindings: Env }>) {
 
     return c.json({ success: true, data: bin }, 200);
   } catch (error) {
-    console.error("Error fetching bin:", error);
+    logger.error("Error fetching bin", {
+      binId,
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw new HTTPException(500, { message: "Failed to fetch bin" });
   }
 }
@@ -61,7 +67,10 @@ export async function getBinRequests(c: Context<{ Bindings: Env }>) {
 
     return c.json({ success: true, data: requests }, 200);
   } catch (error) {
-    console.error("Error fetching bin requests:", error);
+    logger.error("Error fetching bin requests", {
+      binId,
+      error: error instanceof Error ? error.message : String(error),
+    });
     if (error instanceof Error && error.message === "Bin not found") {
       return c.json({ success: false, error: "Bin not found" }, 404);
     }
@@ -77,7 +86,9 @@ export async function createBin(c: Context<{ Bindings: Env }>) {
 
     return c.json({ success: true, data: bin }, 201);
   } catch (error) {
-    console.error("Error creating bin:", error);
+    logger.error("Error creating bin", {
+      error: error instanceof Error ? error.message : String(error),
+    });
 
     // Check if it's a JSON parsing error
     if (

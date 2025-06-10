@@ -1,6 +1,7 @@
 export interface Env {
   WEBHOOKS: DurableObjectNamespace;
   ENVIRONMENT: string;
+  LOG_LEVEL?: string;
   JWT_SECRET?: string; // For signing tokens, falls back to default if not set;
 }
 

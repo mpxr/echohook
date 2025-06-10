@@ -16,6 +16,7 @@ A webhook bin service built with CloudFlare Workers, Hono framework, and CloudFl
 - ✅ **Webhook Capture**: Capture any HTTP method and payload
 - ✅ **Request Inspection**: View headers, body, query parameters, and metadata
 - ✅ **Bin Management**: Create, update, and delete webhook bins
+- ✅ **Structured Logging**: JSON-formatted logs for monitoring and debugging
 - ✅ **TypeScript**: Fully typed with modern TypeScript
 - ✅ **CloudFlare Durable Objects**: Serverless stateful storage with strong consistency
 - ✅ **Hono Framework**: Fast and lightweight web framework
@@ -95,12 +96,6 @@ curl -X POST http://localhost:8787/webhook/your-bin-id \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello webhook!"}'
-```
-
-### 4. Run the Demo Script
-
-```bash
-./src/demo-auth.sh
 ```
 
 ## API Endpoints

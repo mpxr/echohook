@@ -12,7 +12,8 @@ new_sqlite_classes = ["WebhooksStorage"]
 
 [vars]
 ENVIRONMENT = "development"
+LOG_LEVEL = "info"
 
-[env.production]
-[env.production.vars]
-ENVIRONMENT = "production"
+[observability]
+enabled = true
+head_sampling_rate = 1

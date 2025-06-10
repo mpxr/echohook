@@ -18,27 +18,6 @@ export function setupRoutes(app: Hono<{ Bindings: Env }>) {
     return c.json({
       message: "EchoHook - Webhook Bin Service",
       environment: c.env.ENVIRONMENT,
-      storage: "Durable Objects",
-      authentication: "Token-based (Bearer tokens)",
-      endpoints: {
-        // Authentication
-        createToken: "POST /auth/token",
-        getTokens: "GET /auth/tokens",
-        deleteToken: "DELETE /auth/tokens/:tokenId",
-        // Webhook bins
-        bins: "GET /bins",
-        createBin: "POST /bins",
-        getBin: "GET /bins/:binId",
-        updateBin: "PUT /bins/:binId",
-        deleteBin: "DELETE /bins/:binId",
-        getBinRequests: "GET /bins/:binId/requests",
-        captureWebhook: "POST /webhook/:binId (accepts any HTTP method)",
-      },
-      usage: {
-        step1: 'Create a token: POST /auth/token with { "name": "My Token" }',
-        step2: "Use token in all requests: Authorization: Bearer <your_token>",
-        step3: "Create bins and capture webhooks with authenticated requests",
-      },
     });
   });
 

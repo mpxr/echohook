@@ -1,12 +1,14 @@
+import { DurableObject } from "cloudflare:workers";
 import { WebhookRequest, WebhookBin, Env, ApiToken } from "./types.js";
+import { logger } from "./logger.js";
 
-export class WebhooksStorage {
+export class WebhooksStorage extends DurableObject<Env> {
   private storage: DurableObjectStorage;
-  private env: Env;
 
   constructor(state: DurableObjectState, env: Env) {
+    super(state, env);
     this.storage = state.storage;
-    this.env = env;
+    logger.info("WebhooksStorage instance created");
   }
 
   // Legacy fetch handler for backward compatibility if needed
@@ -23,38 +25,55 @@ export class WebhooksStorage {
 
   // RPC-style methods for bins
   async getAllBins(): Promise<WebhookBin[]> {
+    logger.info("Fetching all webhook bins");
     const bins = await this.storage.list<WebhookBin>({ prefix: "bin:" });
-    return Array.from(bins.values()).sort(
+    const result = Array.from(bins.values()).sort(
       (a: WebhookBin, b: WebhookBin) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
+    logger.info("Retrieved webhook bins", { count: result.length });
+    return result;
   }
 
   async getBin(binId: string): Promise<WebhookBin | null> {
     if (!binId) {
+      logger.warn("getBin called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
 
-    return (await this.storage.get<WebhookBin>(`bin:${binId}`)) || null;
+    logger.info("Fetching bin", { binId });
+    const result = (await this.storage.get<WebhookBin>(`bin:${binId}`)) || null;
+    logger.info("Bin fetch result", { binId, found: !!result });
+    return result;
   }
 
   async getBinRequests(binId: string): Promise<WebhookRequest[]> {
     if (!binId) {
+      logger.warn("getBinRequests called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
 
+    logger.info("Fetching requests for bin", { binId });
     const bin = await this.storage.get(`bin:${binId}`);
     if (!bin) {
+      logger.warn("Bin not found", { binId });
       throw new Error("Bin not found");
     }
 
     const requests = await this.storage.list<WebhookRequest>({
       prefix: `request:${binId}:`,
     });
-    return Array.from(requests.values()).sort(
+
+    const result = Array.from(requests.values()).sort(
       (a: WebhookRequest, b: WebhookRequest) =>
         new Date(b.received_at).getTime() - new Date(a.received_at).getTime()
     );
+
+    logger.info("Retrieved requests for bin", {
+      binId,
+      count: result.length,
+    });
+    return result;
   }
 
   async createBin(body: Partial<WebhookBin>): Promise<WebhookBin> {
@@ -70,7 +89,18 @@ export class WebhooksStorage {
       request_count: 0,
     };
 
+    logger.info("Creating new webhook bin", {
+      binId: id,
+      name: bin.name,
+    });
+
     await this.storage.put(`bin:${id}`, bin);
+
+    logger.info("Webhook bin created successfully", {
+      binId: id,
+      name: bin.name,
+    });
+
     return bin;
   }
 
@@ -83,11 +113,15 @@ export class WebhooksStorage {
     message: string;
   }> {
     if (!binId) {
+      logger.warn("captureWebhook called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
 
+    logger.info("Capturing webhook", { binId, method: request.method });
+
     const bin = (await this.storage.get(`bin:${binId}`)) as WebhookBin;
     if (!bin) {
+      logger.warn("Bin not found for webhook capture", { binId });
       throw new Error("Bin not found");
     }
 
@@ -133,6 +167,14 @@ export class WebhooksStorage {
 
     await this.storage.put(`bin:${binId}`, updatedBin);
 
+    logger.info("Webhook captured successfully", {
+      binId,
+      requestId,
+      method: request.method,
+      contentLength: body.length,
+      newRequestCount: updatedBin.request_count,
+    });
+
     return {
       bin_id: binId,
       request_id: requestId,
@@ -145,11 +187,15 @@ export class WebhooksStorage {
     body: Partial<WebhookBin>
   ): Promise<WebhookBin> {
     if (!binId) {
+      logger.warn("updateBin called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
 
+    logger.info("Updating bin", { binId });
+
     const existingBin = (await this.storage.get(`bin:${binId}`)) as WebhookBin;
     if (!existingBin) {
+      logger.warn("Bin not found for update", { binId });
       throw new Error("Bin not found");
     }
 
@@ -164,16 +210,26 @@ export class WebhooksStorage {
     };
 
     await this.storage.put(`bin:${binId}`, updatedBin);
+
+    logger.info("Bin updated successfully", {
+      binId,
+      name: updatedBin.name,
+    });
+
     return updatedBin;
   }
 
   async deleteBin(binId: string): Promise<{ message: string }> {
     if (!binId) {
+      logger.warn("deleteBin called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
 
+    logger.info("Deleting bin", { binId });
+
     const bin = await this.storage.get(`bin:${binId}`);
     if (!bin) {
+      logger.warn("Bin not found for deletion", { binId });
       throw new Error("Bin not found");
     }
 
@@ -184,6 +240,11 @@ export class WebhooksStorage {
       this.storage.delete(key)
     );
     await Promise.all(deletePromises);
+
+    logger.info("Bin and all requests deleted successfully", {
+      binId,
+      requestsDeleted: requests.size,
+    });
 
     return {
       message: "Bin and all requests deleted successfully",
@@ -219,15 +280,28 @@ export class WebhooksStorage {
       is_active: true,
     };
 
+    logger.info("Creating new API token", {
+      tokenId: id,
+      name: apiToken.name,
+      expiresAt: expiresAt,
+    });
+
     await this.storage.put(`token:${id}`, apiToken);
     await this.storage.put(`token_lookup:${token}`, id);
+
+    logger.info("API token created successfully", {
+      tokenId: id,
+      name: apiToken.name,
+    });
 
     return apiToken;
   }
 
   async getTokens(): Promise<ApiToken[]> {
+    logger.info("Fetching all API tokens");
+
     const tokens = await this.storage.list<ApiToken>({ prefix: "token:" });
-    return Array.from(tokens.values())
+    const result = Array.from(tokens.values())
       .filter((token) => token.id && typeof token.id === "string") // Filter out lookup entries
       .sort(
         (a: ApiToken, b: ApiToken) =>
@@ -237,21 +311,33 @@ export class WebhooksStorage {
         ...token,
         token: this.maskToken(token.token), // Don't expose full tokens
       }));
+
+    logger.info("Retrieved API tokens", { count: result.length });
+    return result;
   }
 
   async deleteToken(tokenId: string): Promise<{ message: string }> {
     if (!tokenId) {
+      logger.warn("deleteToken called with invalid token ID");
       throw new Error("Invalid token ID");
     }
 
+    logger.info("Deleting API token", { tokenId });
+
     const apiToken = await this.storage.get<ApiToken>(`token:${tokenId}`);
     if (!apiToken) {
+      logger.warn("Token not found for deletion", { tokenId });
       throw new Error("Token not found");
     }
 
     // Delete both the token and its lookup entry
     await this.storage.delete(`token:${tokenId}`);
     await this.storage.delete(`token_lookup:${apiToken.token}`);
+
+    logger.info("API token deleted successfully", {
+      tokenId,
+      name: apiToken.name,
+    });
 
     return { message: "Token deleted successfully" };
   }
@@ -260,21 +346,32 @@ export class WebhooksStorage {
     token: string
   ): Promise<{ tokenId: string; name: string }> {
     if (!token) {
+      logger.warn("validateToken called with empty token");
       throw new Error("Token is required");
     }
 
+    logger.info("Validating API token");
+
     const tokenId = await this.storage.get<string>(`token_lookup:${token}`);
     if (!tokenId) {
+      logger.warn("Token lookup failed - invalid token");
       throw new Error("Invalid token");
     }
 
     const apiToken = await this.storage.get<ApiToken>(`token:${tokenId}`);
     if (!apiToken || !apiToken.is_active) {
+      logger.warn("Token validation failed - inactive or not found", {
+        tokenId,
+      });
       throw new Error("Token is inactive or not found");
     }
 
     // Check if token is expired
     if (apiToken.expires_at && new Date(apiToken.expires_at) < new Date()) {
+      logger.warn("Token validation failed - expired", {
+        tokenId,
+        expiresAt: apiToken.expires_at,
+      });
       throw new Error("Token has expired");
     }
 
@@ -284,6 +381,11 @@ export class WebhooksStorage {
       last_used_at: new Date().toISOString(),
     };
     await this.storage.put(`token:${tokenId}`, updatedToken);
+
+    logger.info("Token validation successful", {
+      tokenId,
+      name: apiToken.name,
+    });
 
     return { tokenId, name: apiToken.name || "Unknown Token" };
   }

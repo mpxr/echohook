@@ -11,7 +11,7 @@ import {
   createToken,
   getTokens,
   deleteToken,
-} from "./handlers.js";
+} from "./handlers/index";
 
 export function setupRoutes(app: Hono<{ Bindings: Env }>) {
   app.get("/", (c) => {
@@ -21,12 +21,10 @@ export function setupRoutes(app: Hono<{ Bindings: Env }>) {
     });
   });
 
-  // Authentication routes
   app.post("/auth/token", createToken);
   app.get("/auth/tokens", getTokens);
   app.delete("/auth/tokens/:tokenId", deleteToken);
 
-  // Webhook bin routes (all require authentication)
   app.get("/bins", getBins);
   app.get("/bins/:binId", getBin);
   app.get("/bins/:binId/requests", getBinRequests);
@@ -34,6 +32,5 @@ export function setupRoutes(app: Hono<{ Bindings: Env }>) {
   app.put("/bins/:binId", updateBin);
   app.delete("/bins/:binId", deleteBin);
 
-  // Webhook capture route (requires authentication)
   app.all("/webhook/:binId", captureWebhook);
 }

@@ -11,27 +11,12 @@ export class WebhooksStorage extends DurableObject<Env> {
     logger.info("WebhooksStorage instance created");
   }
 
-  // Legacy fetch handler for backward compatibility if needed
-  async fetch(request: Request): Promise<Response> {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error:
-          "This Durable Object now uses RPC-style API. Use direct method calls instead.",
-      }),
-      { status: 501, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  // RPC-style methods for bins
   async getAllBins(): Promise<WebhookBin[]> {
-    logger.info("Fetching all webhook bins");
     const bins = await this.storage.list<WebhookBin>({ prefix: "bin:" });
     const result = Array.from(bins.values()).sort(
       (a: WebhookBin, b: WebhookBin) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
-    logger.info("Retrieved webhook bins", { count: result.length });
     return result;
   }
 
@@ -41,9 +26,7 @@ export class WebhooksStorage extends DurableObject<Env> {
       throw new Error("Invalid bin ID");
     }
 
-    logger.info("Fetching bin", { binId });
     const result = (await this.storage.get<WebhookBin>(`bin:${binId}`)) || null;
-    logger.info("Bin fetch result", { binId, found: !!result });
     return result;
   }
 
@@ -53,7 +36,6 @@ export class WebhooksStorage extends DurableObject<Env> {
       throw new Error("Invalid bin ID");
     }
 
-    logger.info("Fetching requests for bin", { binId });
     const bin = await this.storage.get(`bin:${binId}`);
     if (!bin) {
       logger.warn("Bin not found", { binId });
@@ -69,10 +51,6 @@ export class WebhooksStorage extends DurableObject<Env> {
         new Date(b.received_at).getTime() - new Date(a.received_at).getTime()
     );
 
-    logger.info("Retrieved requests for bin", {
-      binId,
-      count: result.length,
-    });
     return result;
   }
 
@@ -89,17 +67,7 @@ export class WebhooksStorage extends DurableObject<Env> {
       request_count: 0,
     };
 
-    logger.info("Creating new webhook bin", {
-      binId: id,
-      name: bin.name,
-    });
-
     await this.storage.put(`bin:${id}`, bin);
-
-    logger.info("Webhook bin created successfully", {
-      binId: id,
-      name: bin.name,
-    });
 
     return bin;
   }
@@ -167,14 +135,6 @@ export class WebhooksStorage extends DurableObject<Env> {
 
     await this.storage.put(`bin:${binId}`, updatedBin);
 
-    logger.info("Webhook captured successfully", {
-      binId,
-      requestId,
-      method: request.method,
-      contentLength: body.length,
-      newRequestCount: updatedBin.request_count,
-    });
-
     return {
       bin_id: binId,
       request_id: requestId,
@@ -190,8 +150,6 @@ export class WebhooksStorage extends DurableObject<Env> {
       logger.warn("updateBin called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
-
-    logger.info("Updating bin", { binId });
 
     const existingBin = (await this.storage.get(`bin:${binId}`)) as WebhookBin;
     if (!existingBin) {
@@ -211,11 +169,6 @@ export class WebhooksStorage extends DurableObject<Env> {
 
     await this.storage.put(`bin:${binId}`, updatedBin);
 
-    logger.info("Bin updated successfully", {
-      binId,
-      name: updatedBin.name,
-    });
-
     return updatedBin;
   }
 
@@ -224,8 +177,6 @@ export class WebhooksStorage extends DurableObject<Env> {
       logger.warn("deleteBin called with invalid bin ID");
       throw new Error("Invalid bin ID");
     }
-
-    logger.info("Deleting bin", { binId });
 
     const bin = await this.storage.get(`bin:${binId}`);
     if (!bin) {
@@ -240,11 +191,6 @@ export class WebhooksStorage extends DurableObject<Env> {
       this.storage.delete(key)
     );
     await Promise.all(deletePromises);
-
-    logger.info("Bin and all requests deleted successfully", {
-      binId,
-      requestsDeleted: requests.size,
-    });
 
     return {
       message: "Bin and all requests deleted successfully",
@@ -382,10 +328,6 @@ export class WebhooksStorage extends DurableObject<Env> {
     };
     await this.storage.put(`token:${tokenId}`, updatedToken);
 
-    logger.info("Token validation successful", {
-      tokenId,
-      name: apiToken.name,
-    });
 
     return { tokenId, name: apiToken.name || "Unknown Token" };
   }

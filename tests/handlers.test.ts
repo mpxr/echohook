@@ -1,4 +1,4 @@
-import * as handlers from "../src/handlers";
+import * as handlers from "../src/handlers/index";
 
 describe("Handler Functions", () => {
   describe("Function Existence", () => {

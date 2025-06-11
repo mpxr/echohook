@@ -30,7 +30,6 @@ export const generateApiDocsHTML = () => `
                 <div class="flex items-center space-x-4">
                     <a href="/" class="text-gray-600 hover:text-indigo-600">← Back to Home</a>
                     <a href="https://github.com/mpxr/echohook" class="text-gray-600 hover:text-indigo-600">GitHub</a>
-                    <a href="https://echohook.dev" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Use EchoHook</a>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ tag = "v1"
 new_sqlite_classes = ["WebhooksStorage"]
 
 [vars]
-ENVIRONMENT = "development"
+ENVIRONMENT = "production"
 LOG_LEVEL = "info"
 
 [observability]

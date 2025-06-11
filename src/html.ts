@@ -69,7 +69,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="#features" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Features</a>
                         <a href="#getting-started" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Getting Started</a>
-                        <a href="#api" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">API</a>
+                        <a href="/docs/api" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">API</a>
                         <a href="https://github.com/mpxr/echohook" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">GitHub</a>
                     </div>
                 </div>

@@ -348,44 +348,44 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     </div>
                     <div class="divide-y divide-gray-200">
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3 min-w-[50px]">GET</span>
+                                <span class="text-sm font-mono text-gray-900">/api</span>
                             </div>
                             <span class="text-sm text-gray-500">API documentation</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api/auth/token</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-3 min-w-[50px]">POST</span>
+                                <span class="text-sm font-mono text-gray-900">/api/auth/token</span>
                             </div>
                             <span class="text-sm text-gray-500">Create API token</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3 min-w-[50px]">GET</span>
+                                <span class="text-sm font-mono text-gray-900">/api/bins</span>
                             </div>
                             <span class="text-sm text-gray-500">List webhook bins</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-3 min-w-[50px]">POST</span>
+                                <span class="text-sm font-mono text-gray-900">/api/bins</span>
                             </div>
                             <span class="text-sm text-gray-500">Create webhook bin</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins/:binId/requests</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3 min-w-[50px]">GET</span>
+                                <span class="text-sm font-mono text-gray-900">/api/bins/:binId/requests</span>
                             </div>
                             <span class="text-sm text-gray-500">Get captured requests</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
-                            <div>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">ANY</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/api/webhook/:binId</span>
+                            <div class="flex items-center">
+                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-3 min-w-[50px]">ANY</span>
+                                <span class="text-sm font-mono text-gray-900">/api/webhook/:binId</span>
                             </div>
                             <span class="text-sm text-gray-500">Capture webhook</span>
                         </div>

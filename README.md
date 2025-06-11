@@ -2,6 +2,10 @@
 
 A webhook bin service built with CloudFlare Workers, Hono framework, and CloudFlare Durable Objects. Capture, inspect, and debug HTTP webhooks with ease.
 
+## 🌐 Live API
+
+The EchoHook API is live at: **https://echohook.dev**
+
 ## Use Cases
 
 - **API Development**: Test webhooks during development
@@ -32,7 +36,7 @@ All API endpoints (except root `/` and token creation) require authentication us
 1. **Create an API Token**:
 
 ```bash
-curl -X POST https://your-domain.com/auth/token \
+curl -X POST https://echohook.dev/auth/token \
   -H "Content-Type: application/json" \
   -d '{"name": "My Token", "description": "Token for webhook testing"}'
 ```
@@ -40,7 +44,7 @@ curl -X POST https://your-domain.com/auth/token \
 2. **Use the token in all requests**:
 
 ```bash
-curl -H "Authorization: Bearer YOUR_TOKEN" https://your-domain.com/bins
+curl -H "Authorization: Bearer YOUR_TOKEN" https://echohook.dev/bins
 ```
 
 ## 🚀 Quick Start with Authentication
@@ -54,7 +58,7 @@ npm run dev
 ### 2. Create an API Token
 
 ```bash
-curl -X POST http://localhost:8787/auth/token \
+curl -X POST https://echohook.dev/auth/token \
   -H "Content-Type: application/json" \
   -d '{"name": "My API Token", "description": "For testing"}'
 ```
@@ -83,16 +87,16 @@ TOKEN="your-64-char-token"
 
 # List webhook bins
 curl -H "Authorization: Bearer $TOKEN" \
-  http://localhost:8787/bins
+  https://echohook.dev/bins
 
 # Create a webhook bin
-curl -X POST http://localhost:8787/bins \
+curl -X POST https://echohook.dev/bins \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name": "My Webhook Bin", "description": "Test bin"}'
 
 # Capture a webhook
-curl -X POST http://localhost:8787/webhook/your-bin-id \
+curl -X POST https://echohook.dev/webhook/your-bin-id \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello webhook!"}'
@@ -171,7 +175,7 @@ curl -X POST http://localhost:8787/webhook/your-bin-id \
       "id": "req-123e4567-e89b-12d3-a456-426614174000",
       "bin_id": "123e4567-e89b-12d3-a456-426614174000",
       "method": "POST",
-      "url": "https://your-worker.your-subdomain.workers.dev/webhook/123e4567-e89b-12d3-a456-426614174000",
+      "url": "https://echohook.dev/webhook/123e4567-e89b-12d3-a456-426614174000",
       "headers": {
         "content-type": "application/json",
         "user-agent": "GitHub-Hookshot/abc123"
@@ -219,7 +223,7 @@ pnpm run deploy
 ### Create a Webhook Bin
 
 ```bash
-curl -X POST http://localhost:8787/bins \
+curl -X POST https://echohook.dev/bins \
   -H "Content-Type: application/json" \
   -d '{"name": "GitHub Webhooks", "description": "Capture GitHub webhook events"}'
 ```
@@ -228,7 +232,7 @@ curl -X POST http://localhost:8787/bins \
 
 ```bash
 # Any HTTP method is supported
-curl -X POST http://localhost:8787/webhook/YOUR_BIN_ID \
+curl -X POST https://echohook.dev/webhook/YOUR_BIN_ID \
   -H "Content-Type: application/json" \
   -H "X-GitHub-Event: push" \
   -d '{"action": "push", "repository": {"name": "my-repo"}}'
@@ -237,25 +241,25 @@ curl -X POST http://localhost:8787/webhook/YOUR_BIN_ID \
 ### View Captured Requests
 
 ```bash
-curl http://localhost:8787/bins/YOUR_BIN_ID/requests
+curl https://echohook.dev/bins/YOUR_BIN_ID/requests
 ```
 
 ### Get All Bins
 
 ```bash
-curl http://localhost:8787/bins
+curl https://echohook.dev/bins
 ```
 
 ### Get Single Bin
 
 ```bash
-curl http://localhost:8787/bins/YOUR_BIN_ID
+curl https://echohook.dev/bins/YOUR_BIN_ID
 ```
 
 ### Update Bin
 
 ```bash
-curl -X PUT http://localhost:8787/bins/YOUR_BIN_ID \
+curl -X PUT https://echohook.dev/bins/YOUR_BIN_ID \
   -H "Content-Type: application/json" \
   -d '{"name": "Updated Bin Name", "description": "New description"}'
 ```
@@ -263,5 +267,5 @@ curl -X PUT http://localhost:8787/bins/YOUR_BIN_ID \
 ### Delete Bin
 
 ```bash
-curl -X DELETE http://localhost:8787/bins/YOUR_BIN_ID
+curl -X DELETE https://echohook.dev/bins/YOUR_BIN_ID
 ```

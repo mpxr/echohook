@@ -25,7 +25,7 @@ export async function createTestToken(
   worker: Fetcher,
   name = "Test Token"
 ): Promise<string> {
-  const tokenRequest = new Request("http://localhost/auth/token", {
+  const tokenRequest = new Request("http://localhost/api/auth/token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name }),

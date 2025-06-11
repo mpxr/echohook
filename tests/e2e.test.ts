@@ -13,7 +13,7 @@ describe("End-to-End Webhook Flow Tests", () => {
     it("should create, use, and manage a webhook bin through its entire lifecycle", async () => {
       // Step 1: Start with empty bins list
       let request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {},
         testToken
       );
@@ -30,7 +30,7 @@ describe("End-to-End Webhook Flow Tests", () => {
       };
 
       request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -52,7 +52,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 3: Verify bin appears in bins list
       request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {},
         testToken
       );
@@ -70,7 +70,7 @@ describe("End-to-End Webhook Flow Tests", () => {
         email: "test@example.com",
       };
 
-      request = new Request(`http://localhost/webhook/${binId}`, {
+      request = new Request(`http://localhost/api/webhook/${binId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 5: Send second webhook with query parameters
       request = new Request(
-        `http://localhost/webhook/${binId}?source=github&event_id=456`,
+        `http://localhost/api/webhook/${binId}?source=github&event_id=456`,
         {
           method: "POST",
           headers: {
@@ -107,7 +107,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 6: Send a GET webhook
       request = new Request(
-        `http://localhost/webhook/${binId}?health=check&timestamp=${Date.now()}`,
+        `http://localhost/api/webhook/${binId}?health=check&timestamp=${Date.now()}`,
         {
           method: "GET",
           headers: {
@@ -121,7 +121,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 7: Check bin status has been updated
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binId}`,
+        `http://localhost/api/bins/${binId}`,
         {},
         testToken
       );
@@ -134,7 +134,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 8: Retrieve all requests for the bin
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binId}/requests`,
+        `http://localhost/api/bins/${binId}/requests`,
         {},
         testToken
       );
@@ -177,7 +177,7 @@ describe("End-to-End Webhook Flow Tests", () => {
       };
 
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binId}`,
+        `http://localhost/api/bins/${binId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -195,7 +195,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 10: Delete the bin
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binId}`,
+        `http://localhost/api/bins/${binId}`,
         {
           method: "DELETE",
         },
@@ -210,7 +210,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 11: Verify bin is gone
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binId}`,
+        `http://localhost/api/bins/${binId}`,
         {},
         testToken
       );
@@ -220,7 +220,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Step 12: Verify bins list is empty again
       request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {},
         testToken
       );
@@ -236,7 +236,7 @@ describe("End-to-End Webhook Flow Tests", () => {
     it("should handle multiple bins independently", async () => {
       // Create first bin
       let request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -249,7 +249,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Create second bin
       request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -261,14 +261,14 @@ describe("End-to-End Webhook Flow Tests", () => {
       const binB = ((await response.json()) as any).data;
 
       // Send webhooks to each bin
-      request = new Request(`http://localhost/webhook/${binA.id}`, {
+      request = new Request(`http://localhost/api/webhook/${binA.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: "Hello from A" }),
       });
       await SELF.fetch(request);
 
-      request = new Request(`http://localhost/webhook/${binB.id}`, {
+      request = new Request(`http://localhost/api/webhook/${binB.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: "Hello from B" }),
@@ -277,7 +277,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Verify each bin has its own requests
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binA.id}/requests`,
+        `http://localhost/api/bins/${binA.id}/requests`,
         {},
         testToken
       );
@@ -289,7 +289,7 @@ describe("End-to-End Webhook Flow Tests", () => {
       });
 
       request = createAuthenticatedRequest(
-        `http://localhost/bins/${binB.id}/requests`,
+        `http://localhost/api/bins/${binB.id}/requests`,
         {},
         testToken
       );
@@ -302,7 +302,7 @@ describe("End-to-End Webhook Flow Tests", () => {
 
       // Verify bins list shows both
       request = createAuthenticatedRequest(
-        "http://localhost/bins",
+        "http://localhost/api/bins",
         {},
         testToken
       );

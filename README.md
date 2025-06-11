@@ -1,6 +1,6 @@
 # 🪝 EchoHook - Webhook Bin Service
 
-A webhook bin service built with CloudFlare Workers, Hono framework, and CloudFlare Durable Objects. Capture, inspect, and debug HTTP webhooks with ease.
+A webhook bin service built with CloudFlare Workers, Hono framework and CloudFlare Durable Objects. Capture, inspect and debug HTTP webhooks with ease.
 
 ## 🌐 Live API
 
@@ -16,10 +16,15 @@ The EchoHook API is live at: **https://echohook.dev**
 
 ## Features
 
+- ✅ **🔐 Admin-Protected Token Creation**: Secure token generation with admin key
+- ✅ **🚦 Rate Limiting**: Configurable rate limits to prevent abuse
+- ✅ **📊 Daily Quotas**: Token-based usage limits with automatic reset
+- ✅ **✅ Input Validation**: Comprehensive validation and sanitization
+- ✅ **⏰ Token Expiration**: Configurable token expiration dates
 - ✅ **Token Authentication**: Secure API access with Bearer tokens
 - ✅ **Webhook Capture**: Capture any HTTP method and payload
-- ✅ **Request Inspection**: View headers, body, query parameters, and metadata
-- ✅ **Bin Management**: Create, update, and delete webhook bins
+- ✅ **Request Inspection**: View headers, body, query parameters and metadata
+- ✅ **Bin Management**: Create, update and delete webhook bins
 - ✅ **Structured Logging**: JSON-formatted logs for monitoring and debugging
 - ✅ **TypeScript**: Fully typed with modern TypeScript
 - ✅ **CloudFlare Durable Objects**: Serverless stateful storage with strong consistency
@@ -27,21 +32,67 @@ The EchoHook API is live at: **https://echohook.dev**
 - ✅ **Real-time**: Instant webhook capture and viewing
 - ✅ **CORS**: Cross-Origin Resource Sharing enabled
 
+## 🛡️ Security Features
+
+EchoHook includes comprehensive security measures to prevent abuse:
+
+### Admin-Protected Token Creation
+- API tokens can only be created with valid admin key
+- Prevents unauthorized token generation
+- Include `X-Admin-Key` header when creating tokens
+
+### Rate Limiting
+- Token creation: 5 requests per hour per IP
+- Webhook capture: 1000 requests per hour per IP
+- General API: 100 requests per hour per IP
+- Configurable via `RATE_LIMIT_ENABLED` environment variable
+
+### Daily Quotas
+- Each token has configurable daily request limits
+- Usage resets daily at midnight UTC
+- Default quota: 1000 requests per day
+- Configurable per token (1-10,000 range)
+
+### Input Validation
+- Token names: Alphanumeric + spaces/hyphens/underscores only
+- Bin IDs: Must be valid UUIDs
+- All inputs sanitized and length-limited
+
+### Token Management
+- Configurable expiration dates
+- Usage tracking and monitoring
+- Token deactivation support
+
 ## Authentication
 
-All API endpoints (except root `/` and token creation) require authentication using Bearer tokens.
+All API endpoints (except root `/`, health check, and webhook capture) require authentication using Bearer tokens.
+
+> **⚠️ Security Notice**: Token creation now requires admin authorization for security. You need to configure an admin key to create tokens.
 
 ### Getting Started
 
-1. **Create an API Token**:
+1. **Configure Admin Key** (Required for token creation):
+
+```bash
+# Set admin key in wrangler.toml or environment
+export ADMIN_API_KEY="your-secure-admin-key-here"
+```
+
+2. **Create an API Token** (Admin only):
 
 ```bash
 curl -X POST https://echohook.dev/api/auth/token \
+  -H "X-Admin-Key: your-secure-admin-key-here" \
   -H "Content-Type: application/json" \
-  -d '{"name": "My Token", "description": "Token for webhook testing"}'
+  -d '{
+    "name": "My Token", 
+    "description": "Token for webhook testing",
+    "dailyQuota": 1000,
+    "expiresIn": 30
+  }'
 ```
 
-2. **Use the token in all requests**:
+3. **Use the token in all requests**:
 
 ```bash
 curl -H "Authorization: Bearer YOUR_TOKEN" https://echohook.dev/api/bins
@@ -55,12 +106,18 @@ curl -H "Authorization: Bearer YOUR_TOKEN" https://echohook.dev/api/bins
 npm run dev
 ```
 
-### 2. Create an API Token
+### 2. Create an API Token (Admin Required)
 
 ```bash
-curl -X POST https://echohook.dev/api/auth/token \
+curl -X POST http://localhost:8787/api/auth/token \
+  -H "X-Admin-Key: your-admin-key" \
   -H "Content-Type: application/json" \
-  -d '{"name": "My API Token", "description": "For testing"}'
+  -d '{
+    "name": "My API Token", 
+    "description": "For testing",
+    "dailyQuota": 1000,
+    "expiresIn": 30
+  }'
 ```
 
 Response:
@@ -74,6 +131,9 @@ Response:
     "name": "My API Token",
     "description": "For testing",
     "created_at": "2025-06-10T12:00:00.000Z",
+    "expires_at": "2025-07-10T12:00:00.000Z",
+    "daily_quota": 1000,
+    "usage_count": 0,
     "is_active": true
   }
 }
@@ -111,7 +171,7 @@ curl -X POST https://echohook.dev/api/webhook/your-bin-id \
 
 ### Authentication
 
-- `POST /api/auth/token` - Create new API token (no auth required)
+- `POST /api/auth/token` - Create new API token (**Admin key required**)
 - `GET /api/auth/tokens` - List your API tokens
 - `DELETE /api/auth/tokens/:tokenId` - Delete an API token
 
@@ -132,11 +192,14 @@ curl -X POST https://echohook.dev/api/webhook/your-bin-id \
 
 #### Create API Token (POST /api/auth/token)
 
+**Requires admin key in `X-Admin-Key` header**
+
 ```json
 {
   "name": "My API Token",
   "description": "Optional description",
-  "expiresIn": "365"
+  "expiresIn": "365",
+  "dailyQuota": 1000
 }
 ```
 
@@ -230,6 +293,64 @@ pnpm run deploy  # Deploys without syncing
 ```
 
 **Note**: Durable Objects automatically handle storage without requiring database setup or migrations.
+
+## 🔧 Configuration
+
+Configure EchoHook security features through environment variables in your `wrangler.toml`:
+
+```toml
+[vars]
+ENVIRONMENT = "production"
+LOG_LEVEL = "info"
+ADMIN_API_KEY = "your-secure-admin-key-here"
+RATE_LIMIT_ENABLED = "true"
+DEFAULT_TOKEN_QUOTA = "1000"
+```
+
+### Environment Variables
+
+- **ADMIN_API_KEY** (required): Admin key for creating API tokens. Use a strong, random key.
+- **RATE_LIMIT_ENABLED** (optional): Set to "true" to enable rate limiting. Default: disabled.
+- **DEFAULT_TOKEN_QUOTA** (optional): Default daily request quota for new tokens. Default: 1000.
+- **LOG_LEVEL** (optional): Logging level (debug, info, warn, error). Default: info.
+
+### Security Recommendations
+
+1. **Generate a secure admin key**:
+   ```bash
+   openssl rand -hex 32
+   ```
+
+2. **Enable rate limiting in production**:
+   ```toml
+   RATE_LIMIT_ENABLED = "true"
+   ```
+
+3. **Set reasonable default quotas**:
+   ```toml
+   DEFAULT_TOKEN_QUOTA = "5000"
+   ```
+
+4. **Monitor usage and rotate keys regularly**
+
+For detailed security configuration, see [`SECURITY.md`](SECURITY.md).
+
+## 🧪 Testing Security Features
+
+Run the security demo script to test the new features:
+
+```bash
+# Set your admin key and run the demo
+export ADMIN_API_KEY="your-admin-key"
+./security-demo.sh
+```
+
+This script demonstrates:
+- Rate limiting behavior
+- Admin authentication
+- Token creation with quotas
+- Input validation
+- Usage tracking
 
 ## Usage Examples
 

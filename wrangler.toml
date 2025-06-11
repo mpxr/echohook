@@ -13,6 +13,30 @@ new_sqlite_classes = ["WebhooksStorage"]
 [vars]
 ENVIRONMENT = "production"
 LOG_LEVEL = "info"
+# ADMIN_API_KEY = "your-secure-admin-key-here"  # Uncomment and set your admin key
+# RATE_LIMIT_ENABLED = "true"                   # Uncomment to enable rate limiting
+# DEFAULT_TOKEN_QUOTA = "1000"                  # Uncomment to set default quota
+
+# Test environment (used for development and testing)
+[env.development.vars]
+ENVIRONMENT = "development"
+LOG_LEVEL = "debug"
+ADMIN_API_KEY = "test-admin-key-123"
+RATE_LIMIT_ENABLED = "false"
+DEFAULT_TOKEN_QUOTA = "10000"
+
+[env.development.durable_objects]
+bindings = [{ name = "WEBHOOKS", class_name = "WebhooksStorage" }]
+
+[env.test.vars]  
+ENVIRONMENT = "test"
+LOG_LEVEL = "debug"
+ADMIN_API_KEY = "test-admin-key-123"
+RATE_LIMIT_ENABLED = "false"
+DEFAULT_TOKEN_QUOTA = "10000"
+
+[env.test.durable_objects]
+bindings = [{ name = "WEBHOOKS", class_name = "WebhooksStorage" }]
 
 [observability]
 enabled = true

@@ -20,20 +20,26 @@ beforeEach(() => {
 });
 
 // Helper function to create an authentication token for tests
-// Uses the real API endpoint to create tokens
+// Uses the real API endpoint to create tokens with admin key
 export async function createTestToken(
   worker: Fetcher,
   name = "Test Token"
 ): Promise<string> {
+  const adminKey = "test-admin-key-123"; // Test admin key
+  
   const tokenRequest = new Request("http://localhost/api/auth/token", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name }),
+    headers: { 
+      "Content-Type": "application/json",
+      "X-Admin-Key": adminKey,
+    },
+    body: JSON.stringify({ name, dailyQuota: 10000 }),
   });
 
   const tokenResponse = await worker.fetch(tokenRequest);
   if (!tokenResponse.ok) {
-    throw new Error(`Failed to create test token: ${tokenResponse.status}`);
+    const errorText = await tokenResponse.text();
+    throw new Error(`Failed to create test token: ${tokenResponse.status} - ${errorText}`);
   }
 
   const tokenData = (await tokenResponse.json()) as { data: { token: string } };

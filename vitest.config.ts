@@ -6,7 +6,10 @@ export default defineWorkersConfig({
     setupFiles: ["./tests/setup.ts"],
     poolOptions: {
       workers: {
-        wrangler: { configPath: "./wrangler.toml" },
+        wrangler: { 
+          configPath: "./wrangler.toml",
+          environment: "test"
+        },
       },
     },
     // Disable coverage for workers pool due to Node.js module compatibility issues

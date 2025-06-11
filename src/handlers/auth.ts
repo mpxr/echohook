@@ -2,12 +2,34 @@ import { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { Env } from "../types.js";
 import { getDurableObject } from "../utils.js";
+import { isValidTokenName, sanitizeInput } from "../security.js";
 
 export async function createToken(c: Context<{ Bindings: Env }>) {
   try {
     const body = await c.req.json();
+
+    // Validate and sanitize input
+    if (body.name && !isValidTokenName(body.name)) {
+      throw new HTTPException(400, {
+        message:
+          "Invalid token name. Use only alphanumeric characters, spaces, hyphens, and underscores (1-100 chars).",
+      });
+    }
+
+    // Sanitize inputs
+    const sanitizedBody = {
+      name: body.name ? sanitizeInput(body.name) : undefined,
+      description: body.description
+        ? sanitizeInput(body.description)
+        : undefined,
+      expiresIn: body.expiresIn ? String(body.expiresIn) : undefined,
+      dailyQuota: body.dailyQuota
+        ? Math.max(1, Math.min(10000, parseInt(body.dailyQuota)))
+        : undefined, // Limit between 1-10000
+    };
+
     const stub = getDurableObject(c.env);
-    const token = await stub.createToken(body);
+    const token = await stub.createToken(sanitizedBody);
 
     return c.json({ success: true, data: token }, 201);
   } catch (error) {
@@ -19,6 +41,10 @@ export async function createToken(c: Context<{ Bindings: Env }>) {
       (error as Error).message?.includes("JSON")
     ) {
       throw new HTTPException(400, { message: "Invalid JSON in request body" });
+    }
+
+    if (error instanceof HTTPException) {
+      throw error;
     }
 
     throw new HTTPException(500, { message: "Failed to create token" });

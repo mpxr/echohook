@@ -115,7 +115,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     Powerful Features
                 </h2>
                 <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-                    Everything you need to test, debug, and monitor webhooks in development and production.
+                    Use our hosted service at echohook.dev or deploy your own instance - everything you need to test, debug, and monitor webhooks.
                 </p>
             </div>
 
@@ -221,16 +221,16 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-red-500 text-white text-2xl">
-                                    📊
+                                    🔌
                                 </div>
                             </div>
                             <div class="ml-4">
-                                <h3 class="text-lg font-medium text-gray-900">Structured Logging</h3>
+                                <h3 class="text-lg font-medium text-gray-900">API First</h3>
                             </div>
                         </div>
                         <div class="mt-4">
                             <p class="text-base text-gray-500">
-                                JSON-formatted logs for monitoring and debugging. Full TypeScript support.
+                                Complete REST API with programmatic access. Build automation and integrate with your tools.
                             </p>
                         </div>
                     </div>
@@ -278,7 +278,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     Get Started in Minutes
                 </h2>
                 <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-                    Three simple steps to start capturing and debugging webhooks.
+                    Use our hosted service instantly, or deploy your own EchoHook instance with these simple steps.
                 </p>
             </div>
 
@@ -291,7 +291,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Create API Token</h3>
                         <div class="code-block text-left">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://api.echohook.dev/auth/token \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \\
   -H "Content-Type: application/json" \\
   -d '{"name": "My Token"}'</code></pre>
                         </div>
@@ -304,7 +304,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Create Webhook Bin</h3>
                         <div class="code-block text-left">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://api.echohook.dev/bins \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/bins \\
   -H "Authorization: Bearer YOUR_TOKEN" \\
   -H "Content-Type: application/json" \\
   -d '{"name": "Test Bin"}'</code></pre>
@@ -318,7 +318,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Send Webhooks</h3>
                         <div class="code-block text-left">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://api.echohook.dev/webhook/BIN_ID \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/webhook/BIN_ID \\
   -H "Content-Type: application/json" \\
   -d '{"message": "Hello webhook!"}'</code></pre>
                         </div>
@@ -349,35 +349,35 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/auth/token</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api/auth/token</span>
                             </div>
                             <span class="text-sm text-gray-500">Create API token</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/bins</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins</span>
                             </div>
                             <span class="text-sm text-gray-500">List webhook bins</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/bins</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins</span>
                             </div>
                             <span class="text-sm text-gray-500">Create webhook bin</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/bins/:binId/requests</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api/bins/:binId/requests</span>
                             </div>
                             <span class="text-sm text-gray-500">Get captured requests</span>
                         </div>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">ANY</span>
-                                <span class="ml-3 text-sm font-mono text-gray-900">/webhook/:binId</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api/webhook/:binId</span>
                             </div>
                             <span class="text-sm text-gray-500">Capture webhook</span>
                         </div>
@@ -395,18 +395,21 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     Ready to start testing webhooks?
                 </h2>
                 <p class="mt-4 text-xl text-indigo-100">
-                    Deploy EchoHook to CloudFlare Workers in seconds and start capturing webhooks immediately.
+                    Start using EchoHook right away at echohook.dev, or deploy your own instance to CloudFlare Workers in seconds.
                 </p>
                 <div class="mt-8 flex justify-center space-x-4">
-                    <a href="https://github.com/mpxr/echohook" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
+                    <a href="https://echohook.dev" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 4c2.7 0 5.4 1.3 6 4H4c.6-2.7 3.3-4 6-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        Use Hosted Service
+                    </a>
+                    <a href="https://github.com/mpxr/echohook" class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:text-indigo-600">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
                         </svg>
-                        View on GitHub
+                        Deploy Your Own
                     </a>
-                    <button onclick="scrollToTop()" class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:text-indigo-600">
-                        Get Started
-                    </button>
                 </div>
             </div>
         </div>
@@ -426,9 +429,6 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </svg>
                     </a>
                 </div>
-                <p class="mt-8 text-sm text-gray-400">
-                    © 2025 EchoHook. Open source webhook testing tool.
-                </p>
             </div>
         </div>
     </footer>

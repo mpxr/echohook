@@ -336,16 +336,24 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     API Endpoints
                 </h2>
                 <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-                    Simple and intuitive REST API for all your webhook testing needs.
+                    Quick overview of available endpoints and interactive examples to get started.
                 </p>
             </div>
 
+            <!-- API Overview -->
             <div class="mt-16">
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-900">Core Endpoints</h3>
                     </div>
                     <div class="divide-y divide-gray-200">
+                        <div class="px-6 py-4 flex items-center justify-between">
+                            <div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
+                                <span class="ml-3 text-sm font-mono text-gray-900">/api</span>
+                            </div>
+                            <span class="text-sm text-gray-500">API documentation</span>
+                        </div>
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
@@ -384,6 +392,16 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     </div>
                 </div>
             </div>
+
+            <!-- API Documentation Link -->
+            <div class="mt-12 text-center">
+                <a href="/docs/api" class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 shadow-lg">
+                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    View Complete API Documentation
+                </a>
+            </div>
         </div>
     </section>
 
@@ -398,11 +416,8 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     Start using EchoHook right away at echohook.dev, or deploy your own instance to CloudFlare Workers in seconds.
                 </p>
                 <div class="mt-8 flex justify-center space-x-4">
-                    <a href="https://echohook.dev" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 4c2.7 0 5.4 1.3 6 4H4c.6-2.7 3.3-4 6-4z" clip-rule="evenodd"></path>
-                        </svg>
-                        Use Hosted Service
+                    <a href="#getting-started" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
+                        Get Started
                     </a>
                     <a href="https://github.com/mpxr/echohook" class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:text-indigo-600">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">

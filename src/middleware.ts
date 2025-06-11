@@ -47,12 +47,13 @@ export async function authMiddleware(
   c: Context<{ Bindings: Env }>,
   next: Next
 ) {
-  // Skip auth for root endpoint, API health check, token creation, and webhook capture endpoints
+  // Skip auth for root endpoint, API health check, token creation, API docs, and webhook capture endpoints
   const path = new URL(c.req.url).pathname;
   if (
     path === "/" ||
     path === "/api" ||
     path === "/api/auth/token" ||
+    path === "/docs/api" ||
     path.startsWith("/api/webhook/")
   ) {
     await next();

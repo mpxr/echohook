@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { Env } from "./types.js";
+import { HTML_CONTENT } from "./html.js";
 import {
   getBins,
   getBin,
@@ -14,23 +15,32 @@ import {
 } from "./handlers/index";
 
 export function setupRoutes(app: Hono<{ Bindings: Env }>) {
+  // Serve HTML landing page at root
   app.get("/", (c) => {
+    return c.html(HTML_CONTENT);
+  });
+
+  // API health check
+  app.get("/api", (c) => {
     return c.json({
       message: "EchoHook - Webhook Bin Service",
       environment: c.env.ENVIRONMENT,
     });
   });
 
-  app.post("/auth/token", createToken);
-  app.get("/auth/tokens", getTokens);
-  app.delete("/auth/tokens/:tokenId", deleteToken);
+  // Authentication endpoints under /api
+  app.post("/api/auth/token", createToken);
+  app.get("/api/auth/tokens", getTokens);
+  app.delete("/api/auth/tokens/:tokenId", deleteToken);
 
-  app.get("/bins", getBins);
-  app.get("/bins/:binId", getBin);
-  app.get("/bins/:binId/requests", getBinRequests);
-  app.post("/bins", createBin);
-  app.put("/bins/:binId", updateBin);
-  app.delete("/bins/:binId", deleteBin);
+  // Bin management endpoints under /api
+  app.get("/api/bins", getBins);
+  app.get("/api/bins/:binId", getBin);
+  app.get("/api/bins/:binId/requests", getBinRequests);
+  app.post("/api/bins", createBin);
+  app.put("/api/bins/:binId", updateBin);
+  app.delete("/api/bins/:binId", deleteBin);
 
-  app.all("/webhook/:binId", captureWebhook);
+  // Webhook capture endpoint under /api
+  app.all("/api/webhook/:binId", captureWebhook);
 }

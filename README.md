@@ -36,7 +36,7 @@ All API endpoints (except root `/` and token creation) require authentication us
 1. **Create an API Token**:
 
 ```bash
-curl -X POST https://echohook.dev/auth/token \
+curl -X POST https://echohook.dev/api/auth/token \
   -H "Content-Type: application/json" \
   -d '{"name": "My Token", "description": "Token for webhook testing"}'
 ```
@@ -44,7 +44,7 @@ curl -X POST https://echohook.dev/auth/token \
 2. **Use the token in all requests**:
 
 ```bash
-curl -H "Authorization: Bearer YOUR_TOKEN" https://echohook.dev/bins
+curl -H "Authorization: Bearer YOUR_TOKEN" https://echohook.dev/api/bins
 ```
 
 ## 🚀 Quick Start with Authentication
@@ -58,7 +58,7 @@ npm run dev
 ### 2. Create an API Token
 
 ```bash
-curl -X POST https://echohook.dev/auth/token \
+curl -X POST https://echohook.dev/api/auth/token \
   -H "Content-Type: application/json" \
   -d '{"name": "My API Token", "description": "For testing"}'
 ```
@@ -87,16 +87,16 @@ TOKEN="your-64-char-token"
 
 # List webhook bins
 curl -H "Authorization: Bearer $TOKEN" \
-  https://echohook.dev/bins
+  https://echohook.dev/api/bins
 
 # Create a webhook bin
-curl -X POST https://echohook.dev/bins \
+curl -X POST https://echohook.dev/api/bins \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name": "My Webhook Bin", "description": "Test bin"}'
 
 # Capture a webhook
-curl -X POST https://echohook.dev/webhook/your-bin-id \
+curl -X POST https://echohook.dev/api/webhook/your-bin-id \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello webhook!"}'
@@ -106,30 +106,31 @@ curl -X POST https://echohook.dev/webhook/your-bin-id \
 
 ### Health Check
 
-- `GET /` - API health check and endpoint overview (no auth required)
+- `GET /` - Landing page with documentation (no auth required)
+- `GET /api` - API health check (no auth required)
 
 ### Authentication
 
-- `POST /auth/token` - Create new API token (no auth required)
-- `GET /auth/tokens` - List your API tokens
-- `DELETE /auth/tokens/:tokenId` - Delete an API token
+- `POST /api/auth/token` - Create new API token (no auth required)
+- `GET /api/auth/tokens` - List your API tokens
+- `DELETE /api/auth/tokens/:tokenId` - Delete an API token
 
 ### Webhook Bin Management
 
-- `GET /bins` - List all webhook bins
-- `GET /bins/:binId` - Get single bin details
-- `POST /bins` - Create new webhook bin
-- `PUT /bins/:binId` - Update bin details
-- `DELETE /bins/:binId` - Delete bin and all its captured requests
+- `GET /api/bins` - List all webhook bins
+- `GET /api/bins/:binId` - Get single bin details
+- `POST /api/bins` - Create new webhook bin
+- `PUT /api/bins/:binId` - Update bin details
+- `DELETE /api/bins/:binId` - Delete bin and all its captured requests
 
 ### Webhook Requests
 
-- `GET /bins/:binId/requests` - Get all captured requests for a bin
-- `POST /webhook/:binId` - Capture webhook (accepts any HTTP method)
+- `GET /api/bins/:binId/requests` - Get all captured requests for a bin
+- `POST /api/webhook/:binId` - Capture webhook (accepts any HTTP method)
 
 ### Request/Response Format
 
-#### Create API Token (POST /auth/token)
+#### Create API Token (POST /api/auth/token)
 
 ```json
 {
@@ -139,7 +140,7 @@ curl -X POST https://echohook.dev/webhook/your-bin-id \
 }
 ```
 
-#### Create Webhook Bin (POST /bins)
+#### Create Webhook Bin (POST /api/bins)
 
 ```json
 {
@@ -210,10 +211,22 @@ pnpm run dev
 
 This starts the development server at `http://localhost:8787`
 
-### 3. Deploy to CloudFlare
+### 3. HTML Content Management
+
+The landing page HTML is managed in `index.html`. To sync changes to the worker:
 
 ```bash
-pnpm run deploy
+npm run sync-html
+```
+
+This copies the content from `index.html` to `src/html.ts` for deployment.
+
+### 4. Deploy to CloudFlare
+
+```bash
+pnpm run build  # Syncs HTML and deploys
+# or
+pnpm run deploy  # Deploys without syncing
 ```
 
 **Note**: Durable Objects automatically handle storage without requiring database setup or migrations.
@@ -223,7 +236,7 @@ pnpm run deploy
 ### Create a Webhook Bin
 
 ```bash
-curl -X POST https://echohook.dev/bins \
+curl -X POST https://echohook.dev/api/bins \
   -H "Content-Type: application/json" \
   -d '{"name": "GitHub Webhooks", "description": "Capture GitHub webhook events"}'
 ```
@@ -232,7 +245,7 @@ curl -X POST https://echohook.dev/bins \
 
 ```bash
 # Any HTTP method is supported
-curl -X POST https://echohook.dev/webhook/YOUR_BIN_ID \
+curl -X POST https://echohook.dev/api/webhook/YOUR_BIN_ID \
   -H "Content-Type: application/json" \
   -H "X-GitHub-Event: push" \
   -d '{"action": "push", "repository": {"name": "my-repo"}}'
@@ -241,25 +254,25 @@ curl -X POST https://echohook.dev/webhook/YOUR_BIN_ID \
 ### View Captured Requests
 
 ```bash
-curl https://echohook.dev/bins/YOUR_BIN_ID/requests
+curl https://echohook.dev/api/bins/YOUR_BIN_ID/requests
 ```
 
 ### Get All Bins
 
 ```bash
-curl https://echohook.dev/bins
+curl https://echohook.dev/api/bins
 ```
 
 ### Get Single Bin
 
 ```bash
-curl https://echohook.dev/bins/YOUR_BIN_ID
+curl https://echohook.dev/api/bins/YOUR_BIN_ID
 ```
 
 ### Update Bin
 
 ```bash
-curl -X PUT https://echohook.dev/bins/YOUR_BIN_ID \
+curl -X PUT https://echohook.dev/api/bins/YOUR_BIN_ID \
   -H "Content-Type: application/json" \
   -d '{"name": "Updated Bin Name", "description": "New description"}'
 ```
@@ -267,5 +280,5 @@ curl -X PUT https://echohook.dev/bins/YOUR_BIN_ID \
 ### Delete Bin
 
 ```bash
-curl -X DELETE https://echohook.dev/bins/YOUR_BIN_ID
+curl -X DELETE https://echohook.dev/api/bins/YOUR_BIN_ID
 ```

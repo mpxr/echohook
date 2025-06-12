@@ -109,13 +109,11 @@ export const generateApiDocsHTML = () => `
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-sm font-medium text-amber-800">Security & Authentication</h3>
+                        <h3 class="text-sm font-medium text-amber-800">Authentication Required</h3>
                         <div class="mt-2 text-sm text-amber-700">
                             <ul class="space-y-1">
                                 <li>• <strong>Admin key required:</strong> Token creation requires admin authorization with <code class="bg-amber-100 px-1 rounded">X-Admin-Key</code> header</li>
                                 <li>• <strong>Bearer tokens:</strong> All API endpoints require <code class="bg-amber-100 px-1 rounded">Authorization: Bearer your_token_here</code></li>
-                                <li>• <strong>Rate limiting:</strong> Requests are rate-limited per IP address</li>
-                                <li>• <strong>Daily quotas:</strong> Tokens have configurable daily request limits</li>
                             </ul>
                         </div>
                     </div>

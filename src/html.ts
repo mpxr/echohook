@@ -270,37 +270,6 @@ export const HTML_CONTENT = `<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- Security Notice Section -->
-    <section class="py-16 bg-yellow-50 border-y border-yellow-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <div class="flex items-center justify-center mb-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-500 text-white text-2xl mr-3">
-                        🛡️
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-900">Security & Rate Limiting</h2>
-                </div>
-                <div class="max-w-3xl mx-auto">
-                    <div class="bg-white rounded-lg shadow-md p-6 text-left">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">🔒 Protected API Access</h3>
-                        <ul class="space-y-2 text-gray-700 mb-6">
-                            <li>• <strong>Admin-only token creation:</strong> API tokens can only be created with admin authorization</li>
-                            <li>• <strong>Rate limiting:</strong> API requests are rate-limited to prevent abuse</li>
-                            <li>• <strong>Daily quotas:</strong> Each token has configurable daily request limits</li>
-                            <li>• <strong>Input validation:</strong> All inputs are validated and sanitized</li>
-                            <li>• <strong>Token expiration:</strong> Tokens can be configured with expiration dates</li>
-                        </ul>
-                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                            <p class="text-sm text-amber-800">
-                                <strong>Note:</strong> To create API tokens, you need an admin key. Contact the system administrator or configure the <code class="bg-amber-100 px-1 rounded">ADMIN_API_KEY</code> environment variable.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Getting Started Section -->
     <section id="getting-started" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

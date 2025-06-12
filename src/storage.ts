@@ -260,32 +260,6 @@ export class WebhooksStorage extends DurableObject<Env> {
     };
   }
 
-  async getTokens(): Promise<ApiToken[]> {
-    logger.info("Fetching all API tokens");
-
-    const tokens = await this.storage.list<ApiToken>({ prefix: "token:" });
-    const result = Array.from(tokens.values())
-      .filter((token) => token.id && typeof token.id === "string") // Filter out lookup entries
-      .sort(
-        (a: ApiToken, b: ApiToken) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      )
-      .map((token) => ({
-        id: token.id,
-        token: this.maskToken(token.token), // Don't expose full tokens
-        name: token.name,
-        description: token.description,
-        created_at: token.created_at,
-        last_used_at: token.last_used_at,
-        expires_at: token.expires_at,
-        is_active: token.is_active,
-        // Don't expose internal fields: daily_quota, usage_count, usage_reset_date, total_requests
-      }));
-
-    logger.info("Retrieved API tokens", { count: result.length });
-    return result;
-  }
-
   async deleteToken(tokenId: string): Promise<{ message: string }> {
     if (!tokenId) {
       logger.warn("deleteToken called with invalid token ID");

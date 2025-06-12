@@ -173,7 +173,6 @@ curl -X POST https://echohook.dev/api/webhook/your-bin-id \
 ### Authentication
 
 - `POST /api/auth/token` - Create new API token (**Admin key required**)
-- `GET /api/auth/tokens` - List your API tokens
 - `DELETE /api/auth/tokens/:tokenId` - Delete an API token
 
 ### Webhook Bin Management

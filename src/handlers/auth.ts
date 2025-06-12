@@ -48,18 +48,6 @@ export async function createToken(c: Context<{ Bindings: Env }>) {
   }
 }
 
-export async function getTokens(c: Context<{ Bindings: Env }>) {
-  try {
-    const stub = getDurableObject(c.env);
-    const tokens = await stub.getTokens();
-
-    return c.json({ success: true, data: tokens }, 200);
-  } catch (error) {
-    console.error("Error fetching tokens:", error);
-    throw new HTTPException(500, { message: "Failed to fetch tokens" });
-  }
-}
-
 export async function deleteToken(c: Context<{ Bindings: Env }>) {
   const tokenId = c.req.param("tokenId");
 

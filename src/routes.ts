@@ -11,7 +11,6 @@ import {
   deleteBin,
   captureWebhook,
   createToken,
-  getTokens,
   deleteToken,
 } from "./handlers/index";
 
@@ -36,7 +35,6 @@ export function setupRoutes(app: Hono<{ Bindings: Env }>) {
 
   // Authentication endpoints under /api
   app.post("/api/auth/token", createToken);
-  app.get("/api/auth/tokens", getTokens);
   app.delete("/api/auth/tokens/:tokenId", deleteToken);
 
   // Bin management endpoints under /api

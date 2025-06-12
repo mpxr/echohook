@@ -1,6 +1,6 @@
 # 🪝 EchoHook - Webhook Bin Service
 
-A webhook bin service built with CloudFlare Workers, Hono framework, and CloudFlare Durable Objects. Capture, inspect, and debug HTTP webhooks with ease.
+A webhook bin service built with CloudFlare Workers, Hono framework and CloudFlare Durable Objects. Capture, inspect and debug HTTP webhooks with ease.
 
 ## 🌐 Live API
 
@@ -18,8 +18,8 @@ The EchoHook API is live at: **https://echohook.dev**
 
 - ✅ **Token Authentication**: Secure API access with Bearer tokens
 - ✅ **Webhook Capture**: Capture any HTTP method and payload
-- ✅ **Request Inspection**: View headers, body, query parameters, and metadata
-- ✅ **Bin Management**: Create, update, and delete webhook bins
+- ✅ **Request Inspection**: View headers, body, query parameters and metadata
+- ✅ **Bin Management**: Create, update and delete webhook bins
 - ✅ **Structured Logging**: JSON-formatted logs for monitoring and debugging
 - ✅ **TypeScript**: Fully typed with modern TypeScript
 - ✅ **CloudFlare Durable Objects**: Serverless stateful storage with strong consistency
@@ -112,7 +112,6 @@ curl -X POST https://echohook.dev/api/webhook/your-bin-id \
 ### Authentication
 
 - `POST /api/auth/token` - Create new API token (no auth required)
-- `GET /api/auth/tokens` - List your API tokens
 - `DELETE /api/auth/tokens/:tokenId` - Delete an API token
 
 ### Webhook Bin Management

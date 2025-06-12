@@ -8,7 +8,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🪝 EchoHook - Webhook Bin Service</title>
-    <meta name="description" content="Capture, inspect, and debug HTTP webhooks with ease. Built with CloudFlare Workers and Durable Objects.">
+    <meta name="description" content="Capture, inspect and debug HTTP webhooks with ease. Built with CloudFlare Workers and Durable Objects.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -89,7 +89,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     <span class="block text-indigo-200">Webhook Bin Service</span>
                 </h1>
                 <p class="mt-3 max-w-md mx-auto text-base text-indigo-100 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-                    Capture, inspect, and debug HTTP webhooks with ease.
+                    Capture, inspect and debug HTTP webhooks with ease.
                 </p>
                 <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
                     <div class="rounded-md shadow">
@@ -115,7 +115,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     Powerful Features
                 </h2>
                 <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
-                    Use our hosted service at echohook.dev or deploy your own instance - everything you need to test, debug, and monitor webhooks.
+                    Use our hosted service at echohook.dev or deploy your own instance - everything you need to test, debug and monitor webhooks.
                 </p>
             </div>
 
@@ -173,7 +173,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </div>
                         <div class="mt-4">
                             <p class="text-base text-gray-500">
-                                Deep dive into headers, body, query parameters, and metadata for debugging.
+                                Deep dive into headers, body, query parameters and metadata for debugging.
                             </p>
                         </div>
                     </div>
@@ -192,7 +192,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         </div>
                         <div class="mt-4">
                             <p class="text-base text-gray-500">
-                                Create, update, and delete webhook bins. Organize your testing workflows.
+                                Create, update and delete webhook bins. Organize your testing workflows.
                             </p>
                         </div>
                     </div>
@@ -259,7 +259,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-3">🔗 Third-party Integration</h3>
-                        <p class="text-gray-600">Debug webhooks from services like GitHub, Stripe, PayPal, and more.</p>
+                        <p class="text-gray-600">Debug webhooks from services like GitHub, Stripe, PayPal and more.</p>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-3">📈 API Monitoring</h3>
@@ -349,13 +349,6 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                     <div class="divide-y divide-gray-200">
                         <div class="px-6 py-4 flex items-center justify-between">
                             <div class="flex items-center">
-                                <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3 min-w-[50px]">GET</span>
-                                <span class="text-sm font-mono text-gray-900">/api</span>
-                            </div>
-                            <span class="text-sm text-gray-500">API documentation</span>
-                        </div>
-                        <div class="px-6 py-4 flex items-center justify-between">
-                            <div class="flex items-center">
                                 <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-3 min-w-[50px]">POST</span>
                                 <span class="text-sm font-mono text-gray-900">/api/auth/token</span>
                             </div>
@@ -438,7 +431,7 @@ export const HTML_CONTENT = `<!DOCTYPE html>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
                 <div class="text-2xl font-bold text-white mb-4">🪝 EchoHook</div>
-                <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers, Hono, and Durable Objects</p>
+                <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers, Hono and Durable Objects</p>
                 <div class="flex justify-center space-x-6">
                     <a href="https://github.com/mpxr/echohook" class="text-gray-400 hover:text-white">
                         <span class="sr-only">GitHub</span>

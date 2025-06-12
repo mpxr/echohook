@@ -10,7 +10,7 @@ describe("End-to-End Webhook Flow Tests", () => {
   });
 
   describe("Complete Webhook Bin Lifecycle", () => {
-    it("should create, use, and manage a webhook bin through its entire lifecycle", async () => {
+    it("should create, use and manage a webhook bin through its entire lifecycle", async () => {
       // Step 1: Start with empty bins list
       let request = createAuthenticatedRequest(
         "http://localhost/api/bins",

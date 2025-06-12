@@ -37,28 +37,33 @@ The EchoHook API is live at: **https://echohook.dev**
 EchoHook includes comprehensive security measures to prevent abuse:
 
 ### Admin-Protected Token Creation
+
 - API tokens can only be created with valid admin key
 - Prevents unauthorized token generation
 - Include `X-Admin-Key` header when creating tokens
 
 ### Rate Limiting
+
 - Token creation: 5 requests per hour per IP
 - Webhook capture: 1000 requests per hour per IP
 - General API: 100 requests per hour per IP
 - Configurable via `RATE_LIMIT_ENABLED` environment variable
 
 ### Daily Quotas
+
 - Each token has daily request limits configured server-side
 - Usage resets daily at midnight UTC
 - Default quota: 1000 requests per day
 - Configurable by administrators via environment variables
 
 ### Input Validation
+
 - Token names: Alphanumeric + spaces/hyphens/underscores only
 - Bin IDs: Must be valid UUIDs
 - All inputs sanitized and length-limited
 
 ### Token Management
+
 - Configurable expiration dates
 - Usage tracking and monitoring
 - Token deactivation support
@@ -85,7 +90,7 @@ curl -X POST https://echohook.dev/api/auth/token \
   -H "X-Admin-Key: your-secure-admin-key-here" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "My Token", 
+    "name": "My Token",
     "description": "Token for webhook testing",
     "expiresIn": 30
   }'
@@ -112,7 +117,7 @@ curl -X POST http://localhost:8787/api/auth/token \
   -H "X-Admin-Key: your-admin-key" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "My API Token", 
+    "name": "My API Token",
     "description": "For testing",
     "expiresIn": 30
   }'
@@ -312,16 +317,19 @@ DEFAULT_TOKEN_QUOTA = "1000"
 ### Security Recommendations
 
 1. **Generate a secure admin key**:
+
    ```bash
    openssl rand -hex 32
    ```
 
 2. **Enable rate limiting in production**:
+
    ```toml
    RATE_LIMIT_ENABLED = "true"
    ```
 
 3. **Set reasonable default quotas**:
+
    ```toml
    DEFAULT_TOKEN_QUOTA = "5000"
    ```
@@ -341,6 +349,7 @@ export ADMIN_API_KEY="your-admin-key"
 ```
 
 This script demonstrates:
+
 - Rate limiting behavior
 - Admin authentication
 - Token creation with quotas

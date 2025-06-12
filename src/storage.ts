@@ -393,7 +393,7 @@ export class WebhooksStorage extends DurableObject<Env> {
   }
 
   private getTodayDateString(): string {
-    return new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    return new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
   }
 
   private async incrementTokenUsage(tokenId: string): Promise<void> {

@@ -9,7 +9,7 @@ export async function createToken(c: Context<{ Bindings: Env }>) {
     const body = await c.req.json();
 
     // Validate and sanitize input
-    if (body.name && !isValidTokenName(body.name)) {
+    if (body.name !== undefined && !isValidTokenName(body.name)) {
       throw new HTTPException(400, {
         message:
           "Invalid token name. Use only alphanumeric characters, spaces, hyphens, and underscores (1-100 chars).",

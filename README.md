@@ -48,10 +48,10 @@ EchoHook includes comprehensive security measures to prevent abuse:
 - Configurable via `RATE_LIMIT_ENABLED` environment variable
 
 ### Daily Quotas
-- Each token has configurable daily request limits
+- Each token has daily request limits configured server-side
 - Usage resets daily at midnight UTC
 - Default quota: 1000 requests per day
-- Configurable per token (1-10,000 range)
+- Configurable by administrators via environment variables
 
 ### Input Validation
 - Token names: Alphanumeric + spaces/hyphens/underscores only
@@ -87,7 +87,6 @@ curl -X POST https://echohook.dev/api/auth/token \
   -d '{
     "name": "My Token", 
     "description": "Token for webhook testing",
-    "dailyQuota": 1000,
     "expiresIn": 30
   }'
 ```
@@ -115,7 +114,6 @@ curl -X POST http://localhost:8787/api/auth/token \
   -d '{
     "name": "My API Token", 
     "description": "For testing",
-    "dailyQuota": 1000,
     "expiresIn": 30
   }'
 ```
@@ -132,8 +130,6 @@ Response:
     "description": "For testing",
     "created_at": "2025-06-10T12:00:00.000Z",
     "expires_at": "2025-07-10T12:00:00.000Z",
-    "daily_quota": 1000,
-    "usage_count": 0,
     "is_active": true
   }
 }
@@ -198,8 +194,7 @@ curl -X POST https://echohook.dev/api/webhook/your-bin-id \
 {
   "name": "My API Token",
   "description": "Optional description",
-  "expiresIn": "365",
-  "dailyQuota": 1000
+  "expiresIn": "365"
 }
 ```
 

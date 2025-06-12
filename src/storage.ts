@@ -201,7 +201,6 @@ export class WebhooksStorage extends DurableObject<Env> {
     name?: string;
     description?: string;
     expiresIn?: string;
-    dailyQuota?: number;
   }): Promise<ApiToken> {
     const token = this.generateSecureToken();
     const id = crypto.randomUUID();
@@ -216,8 +215,8 @@ export class WebhooksStorage extends DurableObject<Env> {
       expiresAt = expirationDate.toISOString();
     }
 
-    const defaultQuota = 1000; // Default daily quota
-    const dailyQuota = body.dailyQuota || defaultQuota;
+    const defaultQuota = parseInt(this.env.DEFAULT_TOKEN_QUOTA || "1000"); // Default daily quota from env
+    const dailyQuota = defaultQuota;
 
     const apiToken: ApiToken = {
       id,
@@ -248,7 +247,17 @@ export class WebhooksStorage extends DurableObject<Env> {
       name: apiToken.name,
     });
 
-    return apiToken;
+    // Return filtered token (excluding internal fields)
+    return {
+      id: apiToken.id,
+      token: apiToken.token,
+      name: apiToken.name,
+      description: apiToken.description,
+      created_at: apiToken.created_at,
+      expires_at: apiToken.expires_at,
+      is_active: apiToken.is_active,
+      // Don't expose: daily_quota, usage_count, usage_reset_date, total_requests, last_used_at
+    };
   }
 
   async getTokens(): Promise<ApiToken[]> {
@@ -262,8 +271,15 @@ export class WebhooksStorage extends DurableObject<Env> {
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       )
       .map((token) => ({
-        ...token,
+        id: token.id,
         token: this.maskToken(token.token), // Don't expose full tokens
+        name: token.name,
+        description: token.description,
+        created_at: token.created_at,
+        last_used_at: token.last_used_at,
+        expires_at: token.expires_at,
+        is_active: token.is_active,
+        // Don't expose internal fields: daily_quota, usage_count, usage_reset_date, total_requests
       }));
 
     logger.info("Retrieved API tokens", { count: result.length });

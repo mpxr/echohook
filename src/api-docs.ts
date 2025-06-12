@@ -144,8 +144,7 @@ export const generateApiDocsHTML = () => `
                                     <pre class="text-green-400 text-sm"><code>{
   "name": "string",         // Required: Token name (1-100 chars)
   "description": "string",  // Optional: Token description
-  "expiresIn": "number",    // Optional: Days until expiration
-  "dailyQuota": "number"    // Optional: Daily request limit (1-10000)
+  "expiresIn": "number"     // Optional: Days until expiration
 }</code></pre>
                                 </div>
                             </div>
@@ -160,8 +159,6 @@ export const generateApiDocsHTML = () => `
     "name": "string",         // Token name
     "expires_at": "string",   // ISO timestamp (null if no expiration)
     "created_at": "string",   // ISO timestamp
-    "daily_quota": number,    // Daily request limit
-    "usage_count": 0,         // Current daily usage
     "is_active": true
   }
 }</code></pre>
@@ -341,9 +338,9 @@ offset=0    // Optional: Pagination offset</code></pre>
                             <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \\
   -H "X-Admin-Key: YOUR_ADMIN_KEY" \\
   -H "Content-Type: application/json" \\
-  -d '{"name": "My Token", "dailyQuota": 1000}'</code></pre>
+  -d '{"name": "My Token"}'</code></pre>
                         </div>
-                        <p class="text-sm text-gray-400 mt-2">💡 Configure daily quotas and expiration: <code class="bg-gray-800 px-1 rounded text-green-400">"expiresIn": 30, "dailyQuota": 5000</code></p>
+                        <p class="text-sm text-gray-400 mt-2">💡 Configure expiration: <code class="bg-gray-800 px-1 rounded text-green-400">"expiresIn": 30</code></p>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">2. Create a bin</h3>

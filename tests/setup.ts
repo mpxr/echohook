@@ -33,7 +33,7 @@ export async function createTestToken(
       "Content-Type": "application/json",
       "X-Admin-Key": adminKey,
     },
-    body: JSON.stringify({ name, dailyQuota: 10000 }),
+    body: JSON.stringify({ name }),
   });
 
   const tokenResponse = await worker.fetch(tokenRequest);

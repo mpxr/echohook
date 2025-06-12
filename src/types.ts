@@ -27,7 +27,6 @@ export interface WebhooksStorageRPC {
     name?: string;
     description?: string;
     expiresIn?: string;
-    dailyQuota?: number;
   }): Promise<ApiToken>;
   getTokens(): Promise<ApiToken[]>;
   deleteToken(tokenId: string): Promise<{ message: string }>;

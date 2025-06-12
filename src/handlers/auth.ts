@@ -23,9 +23,6 @@ export async function createToken(c: Context<{ Bindings: Env }>) {
         ? sanitizeInput(body.description)
         : undefined,
       expiresIn: body.expiresIn ? String(body.expiresIn) : undefined,
-      dailyQuota: body.dailyQuota
-        ? Math.max(1, Math.min(10000, parseInt(body.dailyQuota)))
-        : undefined, // Limit between 1-10000
     };
 
     const stub = getDurableObject(c.env);

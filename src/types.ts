@@ -3,6 +3,9 @@ export interface Env {
   ENVIRONMENT: string;
   LOG_LEVEL?: string;
   JWT_SECRET?: string; // For signing tokens, falls back to default if not set;
+  ADMIN_API_KEY?: string; // Admin API key for creating tokens
+  RATE_LIMIT_ENABLED?: string; // "true" to enable rate limiting
+  DEFAULT_TOKEN_QUOTA?: string; // Default daily request quota (defaults to 1000)
 }
 
 export interface WebhooksStorageRPC {
@@ -70,4 +73,16 @@ export interface ApiToken {
   last_used_at?: string;
   expires_at?: string;
   is_active: boolean;
+  daily_quota?: number; // Daily request limit
+  usage_count?: number; // Current daily usage
+  usage_reset_date?: string; // When usage resets (daily)
+  total_requests?: number; // Total lifetime requests
+}
+
+export interface RateLimitInfo {
+  ip: string;
+  endpoint: string;
+  count: number;
+  resetTime: number;
+  windowMs: number;
 }

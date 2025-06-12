@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { Env } from "./types.js";
 import { HTML_CONTENT } from "./html.js";
 import { generateApiDocsHTML } from "./api-docs.js";
+import { adminAuthMiddleware } from "./security.js";
 import {
   getBins,
   getBin,
@@ -34,7 +35,7 @@ export function setupRoutes(app: Hono<{ Bindings: Env }>) {
   });
 
   // Authentication endpoints under /api
-  app.post("/api/auth/token", createToken);
+  app.post("/api/auth/token", adminAuthMiddleware, createToken);
   app.delete("/api/auth/tokens/:tokenId", deleteToken);
 
   // Bin management endpoints under /api

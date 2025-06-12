@@ -3,12 +3,18 @@ import { HTTPException } from "hono/http-exception";
 import { logger } from "../logger.js";
 import { Env } from "../types.js";
 import { getDurableObject } from "../utils.js";
+import { isValidBinId } from "../security.js";
 
 export async function captureWebhook(c: Context<{ Bindings: Env }>) {
   const binId = c.req.param("binId");
 
   if (!binId?.trim()) {
     throw new HTTPException(400, { message: "Invalid bin ID" });
+  }
+
+  // Validate bin ID format
+  if (!isValidBinId(binId)) {
+    throw new HTTPException(400, { message: "Invalid bin ID format" });
   }
 
   try {

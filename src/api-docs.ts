@@ -111,7 +111,10 @@ export const generateApiDocsHTML = () => `
                     <div class="ml-3">
                         <h3 class="text-sm font-medium text-amber-800">Authentication Required</h3>
                         <div class="mt-2 text-sm text-amber-700">
-                            <p>All API endpoints except webhook capture require Bearer token authentication. Include your token in the Authorization header: <code class="bg-amber-100 px-1 rounded">Authorization: Bearer your_token_here</code></p>
+                            <ul class="space-y-1">
+                                <li>• <strong>Admin key required:</strong> Token creation requires admin authorization with <code class="bg-amber-100 px-1 rounded">X-Admin-Key</code> header</li>
+                                <li>• <strong>Bearer tokens:</strong> All API endpoints require <code class="bg-amber-100 px-1 rounded">Authorization: Bearer your_token_here</code></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -126,15 +129,21 @@ export const generateApiDocsHTML = () => `
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">POST</span>
                             <h3 class="ml-3 text-lg font-semibold text-gray-900">/api/auth/token</h3>
                         </div>
-                        <p class="mt-2 text-sm text-gray-600">Create a new API token for authentication</p>
+                        <p class="mt-2 text-sm text-gray-600">Create a new API token for authentication (requires admin key)</p>
                     </div>
                     <div class="px-6 py-4">
+                        <div class="mb-4 bg-red-50 border border-red-200 rounded-lg p-3">
+                            <p class="text-sm text-red-700">
+                                <strong>⚠️ Admin Authorization Required:</strong> Include <code class="bg-red-100 px-1 rounded">X-Admin-Key: your_admin_key</code> header
+                            </p>
+                        </div>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="text-sm font-semibold text-gray-900 mb-2">Request Body</h4>
                                 <div class="code-block">
                                     <pre class="text-green-400 text-sm"><code>{
-  "name": "string",         // Required: Token name
+  "name": "string",         // Required: Token name (1-100 chars)
+  "description": "string",  // Optional: Token description
   "expiresIn": "number"     // Optional: Days until expiration
 }</code></pre>
                                 </div>
@@ -143,11 +152,15 @@ export const generateApiDocsHTML = () => `
                                 <h4 class="text-sm font-semibold text-gray-900 mb-2">Response (201)</h4>
                                 <div class="code-block">
                                     <pre class="text-green-400 text-sm"><code>{
-  "token": "string",      // Bearer token
-  "id": "string",         // Token ID
-  "name": "string",       // Token name
-  "expiresAt": "string",  // ISO timestamp (null if no expiration)
-  "createdAt": "string"   // ISO timestamp
+  "success": true,
+  "data": {
+    "token": "string",        // Bearer token
+    "id": "string",           // Token ID
+    "name": "string",         // Token name
+    "expires_at": "string",   // ISO timestamp (null if no expiration)
+    "created_at": "string",   // ISO timestamp
+    "is_active": true
+  }
 }</code></pre>
                                 </div>
                             </div>
@@ -320,13 +333,14 @@ offset=0    // Optional: Pagination offset</code></pre>
                 <h2 class="text-2xl font-bold text-white mb-6">Quick Start Example</h2>
                 <div class="space-y-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-300 mb-2">1. Create a token</h3>
+                        <h3 class="text-lg font-semibold text-gray-300 mb-2">1. Create a token (Admin only)</h3>
                         <div class="code-block">
                             <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \\
+  -H "X-Admin-Key: YOUR_ADMIN_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{"name": "My Token"}'</code></pre>
                         </div>
-                        <p class="text-sm text-gray-400 mt-2">💡 Add an expiration date: <code class="bg-gray-800 px-1 rounded text-green-400">"expiresIn": 30</code> (expires in 30 days)</p>
+                        <p class="text-sm text-gray-400 mt-2">💡 Configure expiration: <code class="bg-gray-800 px-1 rounded text-green-400">"expiresIn": 30</code></p>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">2. Create a bin</h3>

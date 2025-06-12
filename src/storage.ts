@@ -197,7 +197,6 @@ export class WebhooksStorage extends DurableObject<Env> {
     };
   }
 
-  // Authentication methods
   async createToken(body: {
     name?: string;
     description?: string;
@@ -216,6 +215,9 @@ export class WebhooksStorage extends DurableObject<Env> {
       expiresAt = expirationDate.toISOString();
     }
 
+    const defaultQuota = parseInt(this.env.DEFAULT_TOKEN_QUOTA || "1000"); // Default daily quota from env
+    const dailyQuota = defaultQuota;
+
     const apiToken: ApiToken = {
       id,
       token,
@@ -224,12 +226,17 @@ export class WebhooksStorage extends DurableObject<Env> {
       created_at: now,
       expires_at: expiresAt,
       is_active: true,
+      daily_quota: dailyQuota,
+      usage_count: 0,
+      usage_reset_date: this.getTodayDateString(),
+      total_requests: 0,
     };
 
     logger.info("Creating new API token", {
       tokenId: id,
       name: apiToken.name,
       expiresAt: expiresAt,
+      dailyQuota,
     });
 
     await this.storage.put(`token:${id}`, apiToken);
@@ -240,7 +247,17 @@ export class WebhooksStorage extends DurableObject<Env> {
       name: apiToken.name,
     });
 
-    return apiToken;
+    // Return filtered token (excluding internal fields)
+    return {
+      id: apiToken.id,
+      token: apiToken.token,
+      name: apiToken.name,
+      description: apiToken.description,
+      created_at: apiToken.created_at,
+      expires_at: apiToken.expires_at,
+      is_active: apiToken.is_active,
+      // Don't expose: daily_quota, usage_count, usage_reset_date, total_requests, last_used_at
+    };
   }
 
   async deleteToken(tokenId: string): Promise<{ message: string }> {
@@ -302,12 +319,34 @@ export class WebhooksStorage extends DurableObject<Env> {
       throw new Error("Token has expired");
     }
 
-    // Update last used timestamp
-    const updatedToken = {
-      ...apiToken,
-      last_used_at: new Date().toISOString(),
-    };
-    await this.storage.put(`token:${tokenId}`, updatedToken);
+    // Check daily quota
+    const today = this.getTodayDateString();
+    let usageCount = apiToken.usage_count || 0;
+
+    // Reset usage if it's a new day
+    if (apiToken.usage_reset_date !== today) {
+      usageCount = 0;
+    }
+
+    const dailyQuota = apiToken.daily_quota || 1000;
+    if (usageCount >= dailyQuota) {
+      logger.warn("Token validation failed - quota exceeded", {
+        tokenId,
+        usageCount,
+        dailyQuota,
+      });
+      throw new Error("Daily quota exceeded");
+    }
+
+    // Increment usage counter
+    await this.incrementTokenUsage(tokenId);
+
+    logger.info("Token validation successful", {
+      tokenId,
+      name: apiToken.name,
+      usageCount: usageCount + 1,
+      dailyQuota,
+    });
 
     return { tokenId, name: apiToken.name || "Unknown Token" };
   }
@@ -321,9 +360,31 @@ export class WebhooksStorage extends DurableObject<Env> {
     );
   }
 
-  private maskToken(token: string): string {
-    // Show only first 8 and last 4 characters
-    if (token.length <= 12) return token;
-    return `${token.slice(0, 8)}...${token.slice(-4)}`;
+  private getTodayDateString(): string {
+    return new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+  }
+
+  private async incrementTokenUsage(tokenId: string): Promise<void> {
+    const apiToken = await this.storage.get<ApiToken>(`token:${tokenId}`);
+    if (!apiToken) return;
+
+    const today = this.getTodayDateString();
+    let usageCount = apiToken.usage_count || 0;
+    let totalRequests = apiToken.total_requests || 0;
+
+    // Reset daily usage if it's a new day
+    if (apiToken.usage_reset_date !== today) {
+      usageCount = 0;
+    }
+
+    const updatedToken: ApiToken = {
+      ...apiToken,
+      usage_count: usageCount + 1,
+      total_requests: totalRequests + 1,
+      usage_reset_date: today,
+      last_used_at: new Date().toISOString(),
+    };
+
+    await this.storage.put(`token:${tokenId}`, updatedToken);
   }
 }

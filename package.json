@@ -4,7 +4,7 @@
   "description": "Echohook - the future of testing with webhooks",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --env development",
     "deploy": "wrangler deploy",
     "test": "vitest run",
     "test:watch": "vitest",

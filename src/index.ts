@@ -8,6 +8,7 @@ import {
   errorHandler,
   notFoundHandler,
 } from "./middleware.js";
+import { rateLimitMiddleware } from "./security.js";
 import { setupRoutes } from "./routes.js";
 
 export { WebhooksStorage };
@@ -16,6 +17,7 @@ const app = new Hono<{ Bindings: Env }>();
 
 app.use("*", corsMiddleware);
 app.use("*", loggingMiddleware);
+app.use("*", rateLimitMiddleware); // Add rate limiting
 app.use("*", authMiddleware);
 
 setupRoutes(app);

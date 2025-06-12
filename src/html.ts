@@ -290,12 +290,14 @@ export const HTML_CONTENT = `<!DOCTYPE html>
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-pink-100 text-pink-600 text-2xl font-bold mx-auto mb-4">
                             1
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Create API Token</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Create API Token (Admin)</h3>
                         <div class="code-block text-left">
                             <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \\
+  -H "X-Admin-Key: YOUR_ADMIN_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{"name": "My Token"}'</code></pre>
                         </div>
+                        <p class="text-sm text-gray-400 mt-2">⚠️ Requires admin key for security</p>
                     </div>
 
                     <!-- Step 2 -->

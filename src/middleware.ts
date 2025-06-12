@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { HTTPException } from "hono/http-exception";
 import { Env, WebhooksStorageRPC } from "./types.js";
 import { logger } from "./logger.js";
+import { getClientIP } from "./security.js";
 
 export const corsMiddleware = cors();
 
@@ -11,10 +12,7 @@ export async function loggingMiddleware(c: Context, next: Next) {
   const method = c.req.method;
   const url = c.req.url;
   const userAgent = c.req.header("User-Agent") || "Unknown";
-  const ip =
-    c.req.header("CF-Connecting-IP") ||
-    c.req.header("X-Forwarded-For") ||
-    "Unknown";
+  const ip = getClientIP(c);
 
   logger.info(`Request started`, {
     method,

@@ -360,12 +360,6 @@ export class WebhooksStorage extends DurableObject<Env> {
     );
   }
 
-  private maskToken(token: string): string {
-    // Show only first 8 and last 4 characters
-    if (token.length <= 12) return token;
-    return `${token.slice(0, 8)}...${token.slice(-4)}`;
-  }
-
   private getTodayDateString(): string {
     return new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
   }

@@ -9,7 +9,7 @@ export const generateApiDocsHTML = () => `
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #06b6d4 100%);
         }
         .code-block {
             background: #1a202c;
@@ -25,11 +25,11 @@ export const generateApiDocsHTML = () => `
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-indigo-600">🪝 EchoHook</a>
+                    <a href="/" class="text-2xl font-bold text-pink-600">🪝 EchoHook</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="/" class="text-gray-600 hover:text-indigo-600">← Back to Home</a>
-                    <a href="https://github.com/mpxr/echohook" class="text-gray-600 hover:text-indigo-600">GitHub</a>
+                    <a href="/" class="text-gray-600 hover:text-pink-600 transition-colors">← Back to Home</a>
+                    <a href="https://github.com/mpxr/echohook" class="text-gray-600 hover:text-pink-600 transition-colors">GitHub</a>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@ export const generateApiDocsHTML = () => `
                 <h1 class="text-4xl font-extrabold text-white sm:text-5xl">
                     API Documentation
                 </h1>
-                <p class="mt-4 text-xl text-indigo-100 max-w-3xl mx-auto">
+                <p class="mt-4 text-xl text-pink-100 max-w-3xl mx-auto">
                     Complete reference for the EchoHook REST API
                 </p>
             </div>
@@ -66,22 +66,22 @@ export const generateApiDocsHTML = () => `
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">POST</span></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">/api/auth/token</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">Create authentication token</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800">GET</span></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">/api/bins</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">List webhook bins</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">POST</span></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">/api/bins</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">Create webhook bin</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800">GET</span></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">/api/bins/:binId/requests</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">Get captured requests</td>
                             </tr>
@@ -91,7 +91,7 @@ export const generateApiDocsHTML = () => `
                                 <td class="px-6 py-4 text-sm text-gray-900">Capture webhook requests</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800">GET</span></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">/api</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">API health check</td>
                             </tr>
@@ -121,9 +121,9 @@ export const generateApiDocsHTML = () => `
             <div class="space-y-16">
                 <!-- Create Token -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 bg-blue-50 border-b border-blue-200">
+                    <div class="px-6 py-4 bg-pink-50 border-b border-pink-200">
                         <div class="flex items-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">POST</span>
                             <h3 class="ml-3 text-lg font-semibold text-gray-900">/api/auth/token</h3>
                         </div>
                         <p class="mt-2 text-sm text-gray-600">Create a new API token for authentication</p>
@@ -157,9 +157,9 @@ export const generateApiDocsHTML = () => `
 
                 <!-- List Bins -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 bg-green-50 border-b border-green-200">
+                    <div class="px-6 py-4 bg-cyan-50 border-b border-cyan-200">
                         <div class="flex items-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800">GET</span>
                             <h3 class="ml-3 text-lg font-semibold text-gray-900">/api/bins</h3>
                         </div>
                         <p class="mt-2 text-sm text-gray-600">List all webhook bins for the authenticated user</p>
@@ -192,9 +192,9 @@ export const generateApiDocsHTML = () => `
 
                 <!-- Create Bin -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 bg-blue-50 border-b border-blue-200">
+                    <div class="px-6 py-4 bg-pink-50 border-b border-pink-200">
                         <div class="flex items-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">POST</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-pink-100 text-pink-800">POST</span>
                             <h3 class="ml-3 text-lg font-semibold text-gray-900">/api/bins</h3>
                         </div>
                         <p class="mt-2 text-sm text-gray-600">Create a new webhook bin</p>
@@ -230,9 +230,9 @@ export const generateApiDocsHTML = () => `
 
                 <!-- Get Requests -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-4 bg-green-50 border-b border-green-200">
+                    <div class="px-6 py-4 bg-cyan-50 border-b border-cyan-200">
                         <div class="flex items-center">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">GET</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800">GET</span>
                             <h3 class="ml-3 text-lg font-semibold text-gray-900">/api/bins/:binId/requests</h3>
                         </div>
                         <p class="mt-2 text-sm text-gray-600">Get all captured webhook requests for a bin</p>

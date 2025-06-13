@@ -362,7 +362,7 @@ offset=0    // Optional: Pagination offset</code></pre>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
                 <div class="text-2xl font-bold text-white mb-4">🪝 EchoHook</div>
-                <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers, Hono and Durable Objects</p>
+                <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers</p>
                 <div class="flex justify-center space-x-6">
                     <a href="https://github.com/mpxr/echohook" class="text-gray-400 hover:text-white">
                         <span class="sr-only">GitHub</span>

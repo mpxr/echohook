@@ -3,10 +3,11 @@ import { generateApiDocsHTML } from "./api-docs.ts";
 
 declare const lucide: any;
 
+const homePageHTML = document.body.innerHTML;
+
 const routes: { [key: string]: () => void } = {
   "/": () => {
-    // The main page is index.html, so we don't need to do anything here.
-    // We just need to run the scripts that were originally in the HTML file.
+    document.body.innerHTML = homePageHTML;
     runHomePageScript();
   },
   "/docs/api": () => {

@@ -322,8 +322,8 @@ offset=0    // Optional: Pagination offset</code></pre>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">1. Create a token</h3>
                         <div class="code-block">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \\
-  -H "Content-Type: application/json" \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/auth/token \
+  -H "Content-Type: application/json" \
   -d '{"name": "My Token"}'</code></pre>
                         </div>
                         <p class="text-sm text-gray-400 mt-2">💡 Add an expiration date: <code class="bg-gray-800 px-1 rounded text-green-400">"expiresIn": 30</code> (expires in 30 days)</p>
@@ -331,24 +331,24 @@ offset=0    // Optional: Pagination offset</code></pre>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">2. Create a bin</h3>
                         <div class="code-block">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/bins \\
-  -H "Authorization: Bearer YOUR_TOKEN" \\
-  -H "Content-Type: application/json" \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/bins \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
   -d '{"name": "My Webhook Bin"}'</code></pre>
                         </div>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">3. Send a test webhook</h3>
                         <div class="code-block">
-                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/webhook/YOUR_BIN_ID \\
-  -H "Content-Type: application/json" \\
+                            <pre class="text-green-400 text-sm"><code>curl -X POST https://echohook.dev/api/webhook/YOUR_BIN_ID \
+  -H "Content-Type: application/json" \
   -d '{"event": "test", "data": {"message": "Hello EchoHook!"}}'</code></pre>
                         </div>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-300 mb-2">4. View captured requests</h3>
                         <div class="code-block">
-                            <pre class="text-green-400 text-sm"><code>curl https://echohook.dev/api/bins/YOUR_BIN_ID/requests \\
+                            <pre class="text-green-400 text-sm"><code>curl https://echohook.dev/api/bins/YOUR_BIN_ID/requests \
   -H "Authorization: Bearer YOUR_TOKEN"</code></pre>
                         </div>
                     </div>

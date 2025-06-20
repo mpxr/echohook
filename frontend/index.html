@@ -8,6 +8,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" src="/src/main.ts"></script>
 
     <!-- Custom styling -->
@@ -61,7 +62,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <div class="text-2xl font-bold text-pink-600">🪝 EchoHook</div>
+                    <div class="text-2xl font-bold text-pink-600 flex items-center"><i data-lucide="webhook" class="w-6 h-6 mr-2"></i> EchoHook</div>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -124,7 +125,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white text-2xl">
-                                    🔐
+                                    <i data-lucide="lock"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -143,7 +144,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-cyan-500 text-white text-2xl">
-                                    📡
+                                    <i data-lucide="satellite-dish"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -162,7 +163,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white text-2xl">
-                                    🔍
+                                    <i data-lucide="search"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -181,7 +182,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white text-2xl">
-                                    📦
+                                    <i data-lucide="package"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -200,7 +201,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-cyan-600 text-white text-2xl">
-                                    ⚡
+                                    <i data-lucide="zap"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -219,7 +220,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="flex items-center justify-center h-12 w-12 rounded-md bg-pink-600 text-white text-2xl">
-                                    🔌
+                                    <i data-lucide="plug"></i>
                                 </div>
                             </div>
                             <div class="ml-4">
@@ -252,15 +253,15 @@
             <div class="mt-16">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">🚀 API Development</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3"><i data-lucide="rocket" class="inline-block w-5 h-5 mr-2"></i> API Development</h3>
                         <p class="text-gray-600">Test webhooks during development and ensure your integrations work perfectly.</p>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">🔗 Third-party Integration</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3"><i data-lucide="link" class="inline-block w-5 h-5 mr-2"></i> Third-party Integration</h3>
                         <p class="text-gray-600">Debug webhooks from services like GitHub, Stripe, PayPal and more.</p>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">📈 API Monitoring</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3"><i data-lucide="line-chart" class="inline-block w-5 h-5 mr-2"></i> API Monitoring</h3>
                         <p class="text-gray-600">Monitor webhook delivery and payloads in real-time for production systems.</p>
                     </div>
                 </div>
@@ -428,7 +429,7 @@
     <footer class="bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
-                <div class="text-2xl font-bold text-white mb-4">🪝 EchoHook</div>
+                <div class="text-2xl font-bold text-white mb-4 flex items-center justify-center"><i data-lucide="anchor" class="w-6 h-6 mr-2"></i> EchoHook</div>
                 <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers</p>
                 <div class="flex justify-center space-x-6">
                     <a href="https://github.com/mpxr/echohook" class="text-gray-400 hover:text-white">

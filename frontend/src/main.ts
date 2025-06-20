@@ -1,6 +1,8 @@
 import "./style.css";
 import { generateApiDocsHTML } from "./api-docs.ts";
 
+declare const lucide: any;
+
 const routes: { [key: string]: () => void } = {
   "/": () => {
     // The main page is index.html, so we don't need to do anything here.
@@ -16,6 +18,7 @@ const handleRouting = () => {
   const path = window.location.pathname;
   const routeHandler = routes[path] || routes["/"];
   routeHandler();
+  lucide.createIcons();
 };
 
 const runHomePageScript = () => {

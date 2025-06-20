@@ -7,6 +7,7 @@ export const generateApiDocsHTML = () => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentation - EchoHook</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .gradient-bg {
             background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #06b6d4 100%);
@@ -25,7 +26,7 @@ export const generateApiDocsHTML = () => `
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-pink-600">🪝 EchoHook</a>
+                    <a href="/" class="text-2xl font-bold text-pink-600 flex items-center"><i data-lucide="webhook" class="w-6 h-6 mr-2"></i>EchoHook</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="/" class="text-gray-600 hover:text-pink-600 transition-colors">← Back to Home</a>
@@ -361,7 +362,7 @@ offset=0    // Optional: Pagination offset</code></pre>
     <footer class="bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
-                <div class="text-2xl font-bold text-white mb-4">🪝 EchoHook</div>
+                <div class="text-2xl font-bold text-white mb-4 flex items-center justify-center"><i data-lucide="webhook" class="w-6 h-6 mr-2"></i>EchoHook</div>
                 <p class="text-gray-400 mb-8">Runs on the edge thanks to CloudFlare Workers</p>
                 <div class="flex justify-center space-x-6">
                     <a href="https://github.com/mpxr/echohook" class="text-gray-400 hover:text-white">

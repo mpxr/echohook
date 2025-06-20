@@ -1,24 +1,14 @@
 {
-  "name": "echohook",
-  "version": "0.0.1",
-  "description": "Echohook - the future of testing with webhooks",
-  "main": "src/index.ts",
+  "name": "echohook-monorepo",
+  "private": true,
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --config vitest.coverage.config.ts --coverage"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "deploy": "turbo run deploy"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.5.0",
-    "@cloudflare/workers-types": "^4.20250604.0",
-    "@vitest/coverage-v8": "2.1.9",
-    "typescript": "^5.8.3",
-    "vitest": "^2.1.8",
-    "wrangler": "^4.19.1"
+    "turbo": "latest"
   },
-  "dependencies": {
-    "hono": "^4.7.11"
-  }
+  "packageManager": "pnpm@9.1.0"
 }

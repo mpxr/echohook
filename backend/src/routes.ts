@@ -1,7 +1,5 @@
 import { Hono } from "hono";
 import { Env } from "./types.js";
-import { HTML_CONTENT } from "./html.js";
-import { generateApiDocsHTML } from "./api-docs.js";
 import {
   getBins,
   getBin,
@@ -15,16 +13,6 @@ import {
 } from "./handlers/index";
 
 export function setupRoutes(app: Hono<{ Bindings: Env }>) {
-  // Serve HTML landing page at root
-  app.get("/", (c) => {
-    return c.html(HTML_CONTENT);
-  });
-
-  // Serve API documentation page
-  app.get("/docs/api", (c) => {
-    return c.html(generateApiDocsHTML());
-  });
-
   // API health check
   app.get("/api", (c) => {
     return c.json({
